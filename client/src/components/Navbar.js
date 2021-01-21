@@ -2,6 +2,8 @@ import styled, { css } from "styled-components";
 import { Link } from "react-router-dom";
 import { menuData } from "../data/MenuData";
 import { Button } from "./Button";
+import Bars from "../images/bars.svg";
+import { FaBars } from "react-icons/fa";
 
 const Nav = styled.nav`
   height: 60px;
@@ -28,10 +30,25 @@ const Logo = styled(Link)`
   ${NavLink}
   font-style: italic;
 `;
-const MenuBars = styled.i``;
+const MenuBars = styled(FaBars)`
+  display: none;
+  color: #fff;
+  height: 40px;
+  width: 40px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(-50%, 25%);
+  @media screen and (max-width: 768px) {
+    display: block;
+  }
+`;
 const NavMenu = styled.div`
   display: flex;
   align-items: center;
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const NavMenuLinks = styled(Link)`
@@ -42,6 +59,9 @@ const NavBtn = styled.div`
   display: flex;
   align-items: center;
   margin-right: 24px;
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
 `;
 
 function Navbar() {
@@ -57,7 +77,9 @@ function Navbar() {
         ))}
       </NavMenu>
       <NavBtn>
-        <Button to="/contact">Contact Us</Button>
+        <Button to="/contact" primary="true">
+          Contact Us
+        </Button>
       </NavBtn>
     </Nav>
   );
