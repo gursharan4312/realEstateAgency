@@ -52,7 +52,7 @@ const HeroContent = styled.div`
   flex-direction: column;
   max-width: 1600px;
   width: calc(100% - 100px);
-  color: #fff;
+  color: var(--secondary-text);
 
   h1 {
     font-size: clamp(1rem, 8vw, 2rem);
@@ -74,9 +74,9 @@ const Arrow = styled(IoMdArrowRoundForward)`
 const arrowButtons = css`
   width: 50px;
   height: 50px;
-  color: #fff;
+  color: var(--secondary-text);
   cursor: pointer;
-  background: #000d1a;
+  background: var(--secondary-bg-dark);
   border-radius: 50px;
   padding: 10px;
   margin: 1rem;
@@ -84,7 +84,7 @@ const arrowButtons = css`
   transition: 0.3s;
 
   &:hover {
-    background: #cd853f;
+    background: var(--secondary-bg);
     transform: scale(1.05);
   }
 `;
@@ -136,7 +136,6 @@ const Hero = ({ slides }) => {
               <p>{slides[current].price}</p>
               <Button
                 to={slides[current].path}
-                primary="true"
                 css={`
                   max-width: 160px;
                 `}

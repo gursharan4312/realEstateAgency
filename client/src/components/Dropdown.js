@@ -10,7 +10,7 @@ const DropsownContainer = styled.div`
   z-index: 999;
   width: 100%;
   height: 100%;
-  background: #cd853f;
+  background: var(--secondary-bg);
   display: grid;
   align-items: center;
   top: 0;
@@ -29,7 +29,7 @@ const Icon = styled.div`
   outline: none;
 `;
 const CloseIcon = styled(FaTimes)`
-  color: #000d1a;
+  color: var(--primary-text);
 `;
 const DropdownWrapper = styled.div``;
 const DropdownMenu = styled.div`
@@ -45,7 +45,7 @@ const DropdownMenu = styled.div`
 `;
 const Dropdownlink = styled(Link)`
   display: flex;
-  color: #fff;
+  color: var(--secondary-text);
   align-items: center;
   justify-content: center;
   font-size: 1.5rem;
@@ -56,7 +56,7 @@ const Dropdownlink = styled(Link)`
   left: ${({ isOpen }) => (isOpen ? 0 : "100%")};
 
   &:hover {
-    color: #000d1a;
+    color: var(--primary-text);
   }
 `;
 const BtnWrap = styled.div`
@@ -79,7 +79,7 @@ const Dropdown = ({ toggle, isOpen }) => {
           ))}
         </DropdownMenu>
         <BtnWrap>
-          <Button primary="true" round="true" big="true" to="/contact">
+          <Button round="true" big="true" to="/contact">
             Contact Us
           </Button>
         </BtnWrap>

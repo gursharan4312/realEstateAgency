@@ -8,6 +8,7 @@ const Section = styled.section`
   padding: 4rem 0;
 `;
 const Container = styled.div`
+  background: var(--primary-bg);
   padding: 3rem calc((100vw - 1300px) / 2);
   display: grid;
   grid-template-columns: 1fr 1fr;

@@ -12,6 +12,7 @@ const Container = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 600px;
+  background: var(--primary-bg);
 
   @media screen and (max-width: 768px) {
     grid-template-columns: 1fr;
@@ -25,6 +26,7 @@ const ColumnLeft = styled.div`
   line-height: 1.4;
   padding: 1rem 2rem;
   order: ${({ reverse }) => (reverse ? 2 : 1)};
+  color: var(--primary-text);
   h1 {
     margin-bottom: 1rem;
     font-size: clamp(1.5rem, 6vw, 2rem);
@@ -70,9 +72,7 @@ function InfoSection({
           <h1>{heading}</h1>
           <p>{paragraphOne}</p>
           <p>{paragraphTwo}</p>
-          <Button to={buttonLabel} primary="true">
-            {buttonLabel}
-          </Button>
+          <Button to={buttonLabel}>{buttonLabel}</Button>
         </ColumnLeft>
         <ColumnRight reverse={reverse}>
           <img src={image} alt="home" />

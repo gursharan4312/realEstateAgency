@@ -13,11 +13,11 @@ const Nav = styled.nav`
   z-index: 100;
   position: fixed;
   width: 100%;
-  background: ${({ atTop }) => (atTop ? "transparent" : "#cd853f")};
+  background: ${({ atTop }) => (atTop ? "transparent" : "var(--secondary-bg)")};
 `;
 
 const NavLink = css`
-  color: #fff;
+  color: var(--secondary-text);
   display: inline-block;
   align-items: center;
   padding: 0 1rem;
@@ -32,7 +32,7 @@ const Logo = styled(Link)`
 `;
 const MenuBars = styled(FaBars)`
   display: none;
-  color: #fff;
+  color: var(--secondary-text);
   height: 40px;
   width: 40px;
   position: absolute;
@@ -91,9 +91,7 @@ function Navbar({ toggle }) {
         ))}
       </NavMenu>
       <NavBtn>
-        <Button to="/contact" primary="true">
-          Contact Us
-        </Button>
+        <Button to="/contact">Contact Us</Button>
       </NavBtn>
     </Nav>
   );
