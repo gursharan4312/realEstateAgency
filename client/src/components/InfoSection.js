@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components/macro";
 import { Button } from "./Button";
 
 const Section = styled.section`
@@ -33,6 +33,8 @@ const ColumnLeft = styled.div`
   }
   p {
     margin-bottom: 2rem;
+    color: var(--primary-text-two);
+    font-size: 1.2rem;
   }
 `;
 const ColumnRight = styled.div`
@@ -72,7 +74,18 @@ function InfoSection({
           <h1>{heading}</h1>
           <p>{paragraphOne}</p>
           <p>{paragraphTwo}</p>
-          <Button to={buttonLabel}>{buttonLabel}</Button>
+          <Button
+            primary
+            to={buttonLabel}
+            css={`
+              &:hover {
+                background: var(--secondary-bg);
+                color: #fff;
+              }
+            `}
+          >
+            {buttonLabel}
+          </Button>
         </ColumnLeft>
         <ColumnRight reverse={reverse}>
           <img src={image} alt="home" />

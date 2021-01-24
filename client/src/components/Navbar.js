@@ -3,13 +3,13 @@ import styled, { css } from "styled-components";
 import { Link } from "react-router-dom";
 import { menuData } from "../data/MenuData";
 import { Button } from "./Button";
-import { FaBars } from "react-icons/fa";
+import { FaBars, FaSun, FaMoon } from "react-icons/fa";
 
 const Nav = styled.nav`
   height: 60px;
   display: flex;
   justify-content: space-between;
-  padding: 1rem 2rem;
+  padding: 1rem 1rem 1rem 2rem;
   z-index: 100;
   position: fixed;
   width: 100%;
@@ -65,8 +65,72 @@ const NavBtn = styled.div`
   }
 `;
 
+const DarkThemeBtn = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid var(--primary-bg);
+  padding: 0.3rem 0.5rem;
+  margin-left: 1rem;
+  /* border-radius: 10px; */
+  font-size: 1.4rem;
+  background: var(--primary-bg);
+  color: var(--primary-text);
+`;
+
+const ToggleSwitch = styled.label`
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+  margin: 0 0.3rem;
+  input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    &:checked + .slider {
+      background-color: var(--primary-bg);
+    }
+    &:focus + .slider {
+      box-shadow: 0 0 1px var(--primary-bg);
+    }
+    &:checked + .slider:before {
+      -webkit-transform: translateX(26px);
+      -ms-transform: translateX(26px);
+      transform: translateX(26px);
+    }
+  }
+`;
+
+const Slider = styled.span`
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  border-radius: 34px;
+  border: 1px solid #000;
+  &:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+    border-radius: 50%;
+  }
+`;
+
 function Navbar({ toggle }) {
   const [atTop, setAtTop] = useState(true);
+  const [darkTheme, setDarkTheme] = useState(false);
   useEffect(() => {
     let eventListener = window.addEventListener("scroll", (e) => {
       var scrolled = document.scrollingElement.scrollTop;
@@ -79,6 +143,16 @@ function Navbar({ toggle }) {
 
     return () => window.removeEventListener("scroll", eventListener);
   }, [atTop]);
+
+  useEffect(() => {
+    const htmlTag = document.getElementsByTagName("html")[0];
+    if (darkTheme && !htmlTag.hasAttribute("data-theme")) {
+      htmlTag.setAttribute("data-theme", "dark");
+    } else if (!darkTheme && htmlTag.hasAttribute("data-theme")) {
+      htmlTag.removeAttribute("data-theme");
+    }
+  }, [darkTheme]);
+
   return (
     <Nav atTop={atTop}>
       <Logo>REST</Logo>
@@ -94,6 +168,19 @@ function Navbar({ toggle }) {
         <Button primary to="/contact">
           Contact Us
         </Button>
+        <DarkThemeBtn>
+          <FaSun />
+          <ToggleSwitch htmlFor="darkmodetoggler">
+            <input
+              type="checkbox"
+              checked={darkTheme}
+              onChange={() => setDarkTheme(!darkTheme)}
+              id="darkmodetoggler"
+            />
+            <Slider className="slider"></Slider>
+          </ToggleSwitch>
+          <FaMoon />
+        </DarkThemeBtn>
       </NavBtn>
     </Nav>
   );
