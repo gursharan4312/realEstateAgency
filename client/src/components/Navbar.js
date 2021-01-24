@@ -38,6 +38,7 @@ const MenuBars = styled(FaBars)`
   top: 0;
   right: 0;
   transform: translate(-50%, 25%);
+  cursor: pointer;
   @media screen and (max-width: 768px) {
     display: block;
   }
@@ -63,11 +64,11 @@ const NavBtn = styled.div`
   }
 `;
 
-function Navbar() {
+function Navbar({ toggle }) {
   return (
     <Nav>
       <Logo>REST</Logo>
-      <MenuBars />
+      <MenuBars onClick={toggle} />
       <NavMenu>
         {menuData.map((item, index) => (
           <NavMenuLinks to={item.link} key={index}>
