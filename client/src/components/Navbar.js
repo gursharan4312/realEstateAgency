@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 import { Link } from "react-router-dom";
 import { menuData } from "../data/MenuData";
@@ -12,7 +13,7 @@ const Nav = styled.nav`
   z-index: 100;
   position: fixed;
   width: 100%;
-  /* background: red; */
+  background: ${({ atTop }) => (atTop ? "transparent" : "#cd853f")};
 `;
 
 const NavLink = css`
@@ -65,8 +66,21 @@ const NavBtn = styled.div`
 `;
 
 function Navbar({ toggle }) {
+  const [atTop, setAtTop] = useState(true);
+  useEffect(() => {
+    let eventListener = window.addEventListener("scroll", (e) => {
+      var scrolled = document.scrollingElement.scrollTop;
+      if (scrolled >= 120) {
+        if (atTop) setAtTop(false);
+      } else {
+        if (!atTop) setAtTop(true);
+      }
+    });
+
+    return () => window.removeEventListener("scroll", eventListener);
+  }, [atTop]);
   return (
-    <Nav>
+    <Nav atTop={atTop}>
       <Logo>REST</Logo>
       <MenuBars onClick={toggle} />
       <NavMenu>
