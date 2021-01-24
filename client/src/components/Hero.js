@@ -23,8 +23,8 @@ const HeroWrapper = styled.div`
 
 const HeroSlide = styled.div`
   z-index: 1;
-  width: 100%auto;
-  height: 100%auto;
+  width: 100%;
+  height: 100%;
 `;
 const HeroSlider = styled.div`
   position: absolute;
