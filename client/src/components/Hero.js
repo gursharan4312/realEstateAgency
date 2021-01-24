@@ -43,7 +43,7 @@ const HeroImage = styled.img`
   width: 100vw;
   height: 100vh;
   object-fit: cover;
-  filter: brightness(85%);
+  filter: brightness(70%);
 `;
 const HeroContent = styled.div`
   position: relative;
@@ -52,7 +52,7 @@ const HeroContent = styled.div`
   flex-direction: column;
   max-width: 1600px;
   width: calc(100% - 100px);
-  color: var(--secondary-text);
+  color: #fff;
 
   h1 {
     font-size: clamp(1rem, 8vw, 2rem);
@@ -76,7 +76,7 @@ const arrowButtons = css`
   height: 50px;
   color: var(--secondary-text);
   cursor: pointer;
-  background: var(--secondary-bg-dark);
+  background: var(--primary-bg-two);
   border-radius: 50px;
   padding: 10px;
   margin: 1rem;
@@ -135,6 +135,7 @@ const Hero = ({ slides }) => {
               <h1>{slides[current].title}</h1>
               <p>{slides[current].price}</p>
               <Button
+                primary
                 to={slides[current].path}
                 css={`
                   max-width: 160px;

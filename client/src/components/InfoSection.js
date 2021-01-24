@@ -6,13 +6,13 @@ const Section = styled.section`
   width: 100%;
   height: 100%;
   padding: 4rem 0;
+  background: var(--primary-bg);
 `;
 const Container = styled.div`
   padding: 3rem calc((100vw - 1300px) / 2);
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 600px;
-  background: var(--primary-bg);
 
   @media screen and (max-width: 768px) {
     grid-template-columns: 1fr;
@@ -66,7 +66,7 @@ function InfoSection({
   delay,
 }) {
   return (
-    <Section>
+    <Section reverse={reverse}>
       <Container>
         <ColumnLeft reverse={reverse}>
           <h1>{heading}</h1>

@@ -60,7 +60,7 @@ function Card({ image, alt, heading, buttonLabel, buttonLink }) {
             height: 2px;
             bottom: 0;
             left: 0;
-            background-color: var(--secondary-bg);
+            background-color: var(--link-hover);
             visibility: hidden;
             transform: scaleX(0);
             transition: all 0.3s ease-in-out;

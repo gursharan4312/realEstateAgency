@@ -91,7 +91,9 @@ function Navbar({ toggle }) {
         ))}
       </NavMenu>
       <NavBtn>
-        <Button to="/contact">Contact Us</Button>
+        <Button primary to="/contact">
+          Contact Us
+        </Button>
       </NavBtn>
     </Nav>
   );

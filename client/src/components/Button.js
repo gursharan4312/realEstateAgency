@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 
 export const Button = styled(Link)`
   background: ${({ primary }) =>
-    typeof primary === "undefined"
-      ? "var(--secondary-bg-dark)"
-      : "var(--primary-bg)"};
+    typeof primary !== "undefined"
+      ? "var(--primary-button-bg)"
+      : "var(--secondary-button-bg)"};
   white-space: nowrap;
   outline: none;
   border: none;
@@ -19,9 +19,9 @@ export const Button = styled(Link)`
   align-items: center;
   padding: ${({ big }) => (big ? "16px 40px" : "14px 24px")};
   color: ${({ primary }) =>
-    typeof primary === "undefined"
-      ? "var(--secondary-text)"
-      : "var(--primary-text)"};
+    typeof primary !== "undefined"
+      ? "var(--primary-text)"
+      : "var(--secondary-text)"};
   font-size: ${({ big }) => (big ? "20px" : "14px")};
 
   &:hover {

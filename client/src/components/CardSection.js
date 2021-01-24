@@ -6,9 +6,9 @@ const Section = styled.section`
   width: 100%;
   height: 100%;
   padding: 4rem 0;
+  background: var(--primary-bg);
 `;
 const Container = styled.div`
-  background: var(--primary-bg);
   padding: 3rem calc((100vw - 1300px) / 2);
   display: grid;
   grid-template-columns: 1fr 1fr;

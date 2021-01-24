@@ -4,14 +4,36 @@ const GlobalStyles = createGlobalStyle`
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
         
     :root{
-        --primary-bg : #fff;
-        --secondary-bg-dark : #000d1a;
+        /* --primary-bg: #424242;
+        --primary-bg-two: #616161;
         --secondary-bg: #cd853f;
-        --primary-text: #000d1a;
-        --secondary-text: #fff;
+
+        --primary-text: #fff;
+        --secondary-text: #000;
+
         --primary-link-color: #000;
         --secondary-link-color: #fff;
         --link-hover:#cd853f;
+
+        --primary-button-bg: #000;
+        --secondary-button-bg: #fff; */
+
+
+        --primary-bg: #f7f7f7;
+        --primary-bg-two: #e1e1e1;
+        --secondary-bg: #cd853f;
+
+        --primary-text: #000;
+        --secondary-text: #fff;
+
+        --primary-link-color: #000;
+        --secondary-link-color: #fff;
+        --link-hover:#cd853f;
+
+        --primary-button-bg: #fff;
+        --secondary-button-bg: #000;
+
+
     }
     *{
         margin:0;
