@@ -8,7 +8,7 @@ import CardSection from "../components/CardSection";
 
 function index() {
   return (
-    <Layout>
+    <Layout atHome>
       <Hero slides={SliderData} />
       <InfoSection {...InfoData} />
       <InfoSection {...InfoDataTwo} />

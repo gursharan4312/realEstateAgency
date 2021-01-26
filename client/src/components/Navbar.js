@@ -13,8 +13,8 @@ const Nav = styled.nav`
   z-index: 100;
   position: fixed;
   width: 100%;
-  background: ${({ atTop, theme }) =>
-    atTop ? "transparent" : theme.backgroundVariant};
+  background: ${({ atTop, atHome, theme }) =>
+    atTop && atHome ? "transparent" : theme.backgroundVariant};
 `;
 
 const NavLink = css`
@@ -128,7 +128,7 @@ const Slider = styled.span`
   }
 `;
 
-function Navbar({ toggleDropdown, setTheme, theme }) {
+function Navbar({ toggleDropdown, setTheme, theme, atHome }) {
   const [atTop, setAtTop] = useState(true);
   useEffect(() => {
     let eventListener = window.addEventListener("scroll", (e) => {
@@ -144,8 +144,8 @@ function Navbar({ toggleDropdown, setTheme, theme }) {
   }, [atTop]);
 
   return (
-    <Nav atTop={atTop}>
-      <Logo>REST</Logo>
+    <Nav atTop={atTop} atHome={atHome}>
+      <Logo to="/">REST</Logo>
       <MenuBars onClick={toggleDropdown} />
       <NavMenu>
         {menuData.map((item, index) => (

@@ -7,10 +7,12 @@ const GlobalStyles = createGlobalStyle`
         padding:0;
         box-sizing:border-box;
         font-family: 'Montserrat', sans-serif;
-        transition: 0.3s all;
+        transition: color 0.3s, background 0.3s; 
     }
     html,body{
         overflow-x: hidden;
+        background: ${({ theme }) => theme.background};
+        /* color: ${({ theme }) => theme.primaryText}; */
     }
 `;
 
@@ -24,6 +26,8 @@ export const themes = {
     headingColor: "#fff",
     headingColorInverted: "#000",
     textColor: "#6c737d",
+    primaryText: "#fff",
+    secondaryText: "#6c737d",
   },
   light: {
     background: "#f1f1f1",
@@ -32,5 +36,7 @@ export const themes = {
     headingColor: "#000",
     headingColorInverted: "#fff",
     textColor: "#6c737d",
+    primaryText: "#000",
+    secondaryText: "#6c737d",
   },
 };
