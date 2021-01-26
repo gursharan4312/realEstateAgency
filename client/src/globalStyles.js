@@ -1,8 +1,7 @@
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyles = createGlobalStyle`
-    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
-        
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');       
     :root{
         --primary-bg: #e1e1e1;
         --primary-bg-two: #cfcfcf;
@@ -40,7 +39,7 @@ const GlobalStyles = createGlobalStyle`
         padding:0;
         box-sizing:border-box;
         font-family: 'Montserrat', sans-serif;
-        transition: 0.8s all;
+        transition: 0.3s all;
     }
 
     html,body{
@@ -59,3 +58,22 @@ const GlobalStyles = createGlobalStyle`
 `;
 
 export default GlobalStyles;
+
+export const themes = {
+  dark: {
+    background: "#121212",
+    backgroundVariant: "#272727",
+    primaryColor: "#cd853f",
+    headingColor: "#fff",
+    headingColorInverted: "#000",
+    textColor: "#6c737d",
+  },
+  light: {
+    background: "#e1e1e1",
+    backgroundVariant: "#fff",
+    primaryColor: "#cd853f",
+    headingColor: "#000",
+    headingColorInverted: "#fff",
+    textColor: "#6c737d",
+  },
+};

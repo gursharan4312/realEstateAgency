@@ -10,7 +10,7 @@ const DropsownContainer = styled.div`
   z-index: 999;
   width: 100%;
   height: 100%;
-  background: var(--secondary-bg);
+  background: ${({ theme }) => theme.backgroundVariant};
   display: grid;
   align-items: center;
   top: 0;
@@ -29,7 +29,10 @@ const Icon = styled.div`
   outline: none;
 `;
 const CloseIcon = styled(FaTimes)`
-  color: var(--primary-text);
+  color: ${({ theme }) => theme.headingColor};
+  &:hover {
+    color: ${({ theme }) => theme.primaryColor};
+  }
 `;
 const DropdownWrapper = styled.div``;
 const DropdownMenu = styled.div`
@@ -45,7 +48,7 @@ const DropdownMenu = styled.div`
 `;
 const Dropdownlink = styled(Link)`
   display: flex;
-  color: var(--secondary-text);
+  color: ${({ theme }) => theme.headingColor};
   align-items: center;
   justify-content: center;
   font-size: 1.5rem;
@@ -56,7 +59,7 @@ const Dropdownlink = styled(Link)`
   left: ${({ isOpen }) => (isOpen ? 0 : "100%")};
 
   &:hover {
-    color: var(--primary-text);
+    color: ${({ theme }) => theme.primaryColor};
   }
 `;
 const BtnWrap = styled.div`

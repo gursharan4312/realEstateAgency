@@ -13,11 +13,12 @@ const Nav = styled.nav`
   z-index: 100;
   position: fixed;
   width: 100%;
-  background: ${({ atTop }) => (atTop ? "transparent" : "var(--secondary-bg)")};
+  background: ${({ atTop, theme }) =>
+    atTop ? "transparent" : theme.backgroundVariant};
 `;
 
 const NavLink = css`
-  color: var(--secondary-text);
+  color: ${({ theme }) => theme.headingColor};
   display: inline-block;
   align-items: center;
   padding: 0 1rem;
@@ -32,7 +33,7 @@ const Logo = styled(Link)`
 `;
 const MenuBars = styled(FaBars)`
   display: none;
-  color: var(--secondary-text);
+  color: ${({ theme }) => theme.headingColor};
   height: 40px;
   width: 40px;
   position: absolute;
@@ -69,13 +70,12 @@ const DarkThemeBtn = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 2px solid var(--primary-bg);
   padding: 0.3rem 0.5rem;
   margin-left: 1rem;
-  /* border-radius: 10px; */
   font-size: 1.4rem;
-  background: var(--primary-bg);
-  color: var(--primary-text);
+  .sun {
+    color: #e1e1e1;
+  }
 `;
 
 const ToggleSwitch = styled.label`
@@ -89,10 +89,10 @@ const ToggleSwitch = styled.label`
     width: 0;
     height: 0;
     &:checked + .slider {
-      background-color: var(--primary-bg);
+      background-color: ${({ theme }) => theme.background};
     }
     &:focus + .slider {
-      box-shadow: 0 0 1px var(--primary-bg);
+      box-shadow: 0 0 1px ${({ theme }) => theme.backgroundVariant};
     }
     &:checked + .slider:before {
       -webkit-transform: translateX(26px);
@@ -113,24 +113,23 @@ const Slider = styled.span`
   -webkit-transition: 0.4s;
   transition: 0.4s;
   border-radius: 34px;
-  border: 1px solid #000;
   &:before {
     position: absolute;
+
     content: "";
     height: 26px;
     width: 26px;
     left: 4px;
     bottom: 4px;
-    background-color: white;
+    background-color: ${({ theme }) => theme.backgroundVariant};
     -webkit-transition: 0.4s;
     transition: 0.4s;
     border-radius: 50%;
   }
 `;
 
-function Navbar({ toggle }) {
+function Navbar({ toggle, setTheme, theme }) {
   const [atTop, setAtTop] = useState(true);
-  const [darkTheme, setDarkTheme] = useState(false);
   useEffect(() => {
     let eventListener = window.addEventListener("scroll", (e) => {
       var scrolled = document.scrollingElement.scrollTop;
@@ -143,15 +142,6 @@ function Navbar({ toggle }) {
 
     return () => window.removeEventListener("scroll", eventListener);
   }, [atTop]);
-
-  useEffect(() => {
-    const htmlTag = document.getElementsByTagName("html")[0];
-    if (darkTheme && !htmlTag.hasAttribute("data-theme")) {
-      htmlTag.setAttribute("data-theme", "dark");
-    } else if (!darkTheme && htmlTag.hasAttribute("data-theme")) {
-      htmlTag.removeAttribute("data-theme");
-    }
-  }, [darkTheme]);
 
   return (
     <Nav atTop={atTop}>
@@ -169,12 +159,12 @@ function Navbar({ toggle }) {
           Contact Us
         </Button>
         <DarkThemeBtn>
-          <FaSun />
+          <FaSun className="sun" />
           <ToggleSwitch htmlFor="darkmodetoggler">
             <input
               type="checkbox"
-              checked={darkTheme}
-              onChange={() => setDarkTheme(!darkTheme)}
+              checked={theme === "dark"}
+              onChange={() => setTheme(theme === "dark" ? "light" : "dark")}
               id="darkmodetoggler"
             />
             <Slider className="slider"></Slider>

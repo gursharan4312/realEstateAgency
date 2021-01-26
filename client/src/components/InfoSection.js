@@ -1,12 +1,12 @@
 import React from "react";
-import styled, { css } from "styled-components/macro";
+import styled from "styled-components";
 import { Button } from "./Button";
 
 const Section = styled.section`
   width: 100%;
   height: 100%;
   padding: 4rem 0;
-  background: var(--primary-bg);
+  background: ${({ theme }) => theme.background};
 `;
 const Container = styled.div`
   padding: 3rem calc((100vw - 1300px) / 2);
@@ -26,14 +26,14 @@ const ColumnLeft = styled.div`
   line-height: 1.4;
   padding: 1rem 2rem;
   order: ${({ reverse }) => (reverse ? 2 : 1)};
-  color: var(--primary-text);
+  color: ${({ theme }) => theme.headingColor};
   h1 {
     margin-bottom: 1rem;
     font-size: clamp(1.5rem, 6vw, 2rem);
   }
   p {
     margin-bottom: 2rem;
-    color: var(--primary-text-two);
+    color: ${({ theme }) => theme.textColor};
     font-size: 1.2rem;
   }
 `;
@@ -74,18 +74,7 @@ function InfoSection({
           <h1>{heading}</h1>
           <p>{paragraphOne}</p>
           <p>{paragraphTwo}</p>
-          <Button
-            primary
-            to={buttonLabel}
-            css={`
-              &:hover {
-                background: var(--secondary-bg);
-                color: #fff;
-              }
-            `}
-          >
-            {buttonLabel}
-          </Button>
+          <Button to={buttonLabel}>{buttonLabel}</Button>
         </ColumnLeft>
         <ColumnRight reverse={reverse}>
           <img src={image} alt="home" />

@@ -10,7 +10,7 @@ const CardContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   margin: 0 auto;
-  color: var(--primary-text);
+  color: ${({ theme }) => theme.headingColor};
   @media screen and (max-width: 768px) {
     width: 90%;
     height: 90%;
@@ -45,13 +45,13 @@ function Card({ image, alt, heading, buttonLabel, buttonLink }) {
         to={buttonLink}
         css={`
           background: transparent;
-          color: var(--primary-text);
+          color: "transparent";
           /* display: inline-block; */
           justify-content: flex-start;
           padding-left: 0;
           position: relative;
           &:hover {
-            color: var(--link-hover);
+            color: ${({ theme }) => theme.primaryColor};
           }
           &:before {
             content: "";
@@ -60,7 +60,7 @@ function Card({ image, alt, heading, buttonLabel, buttonLink }) {
             height: 2px;
             bottom: 0;
             left: 0;
-            background-color: var(--link-hover);
+            background-color: ${({ theme }) => theme.primaryColor};
             visibility: hidden;
             transform: scaleX(0);
             transition: all 0.3s ease-in-out;

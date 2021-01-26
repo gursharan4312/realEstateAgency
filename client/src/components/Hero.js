@@ -74,9 +74,9 @@ const Arrow = styled(IoMdArrowRoundForward)`
 const arrowButtons = css`
   width: 50px;
   height: 50px;
-  color: var(--secondary-text);
+  color: ${({ theme }) => theme.headingColor};
   cursor: pointer;
-  background: var(--primary-bg-two);
+  background: ${({ theme }) => theme.background};
   border-radius: 50px;
   padding: 10px;
   margin: 1rem;
@@ -84,7 +84,7 @@ const arrowButtons = css`
   transition: 0.3s;
 
   &:hover {
-    background: var(--secondary-bg);
+    background: ${({ theme }) => theme.primaryColor};
     transform: scale(1.05);
   }
 `;
