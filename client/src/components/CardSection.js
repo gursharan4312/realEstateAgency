@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Card from "./Card";
+import Fade from "react-reveal/Fade";
 
 const Section = styled.section`
   width: 100%;
@@ -37,10 +38,14 @@ function CardSection({ itemOne, itemTwo }) {
     <Section>
       <Container>
         <ColumnLeft>
-          <Card {...itemOne} />
+          <Fade top>
+            <Card {...itemOne} />
+          </Fade>
         </ColumnLeft>
         <ColumnRight>
-          <Card {...itemTwo} />
+          <Fade bottom>
+            <Card {...itemTwo} />
+          </Fade>
         </ColumnRight>
       </Container>
     </Section>

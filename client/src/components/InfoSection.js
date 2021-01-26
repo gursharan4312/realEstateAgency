@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Button } from "./Button";
+import Slide from "react-reveal/Slide";
 
 const Section = styled.section`
   width: 100%;
@@ -71,13 +72,17 @@ function InfoSection({
     <Section reverse={reverse}>
       <Container>
         <ColumnLeft reverse={reverse}>
-          <h1>{heading}</h1>
-          <p>{paragraphOne}</p>
-          <p>{paragraphTwo}</p>
-          <Button to={buttonLabel}>{buttonLabel}</Button>
+          <Slide right={reverse} left={!reverse} delay={200}>
+            <h1>{heading}</h1>
+            <p>{paragraphOne}</p>
+            <p>{paragraphTwo}</p>
+            <Button to={buttonLabel}>{buttonLabel}</Button>
+          </Slide>
         </ColumnLeft>
         <ColumnRight reverse={reverse}>
-          <img src={image} alt="home" />
+          <Slide right={!reverse} left={reverse} delay={200}>
+            <img src={image} alt="home" />
+          </Slide>
         </ColumnRight>
       </Container>
     </Section>
