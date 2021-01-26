@@ -74,7 +74,7 @@ const DarkThemeBtn = styled.div`
   margin-left: 1rem;
   font-size: 1.4rem;
   .sun {
-    color: #e1e1e1;
+    color: #fff;
   }
 `;
 
@@ -128,7 +128,7 @@ const Slider = styled.span`
   }
 `;
 
-function Navbar({ toggle, setTheme, theme }) {
+function Navbar({ toggleDropdown, setTheme, theme }) {
   const [atTop, setAtTop] = useState(true);
   useEffect(() => {
     let eventListener = window.addEventListener("scroll", (e) => {
@@ -146,7 +146,7 @@ function Navbar({ toggle, setTheme, theme }) {
   return (
     <Nav atTop={atTop}>
       <Logo>REST</Logo>
-      <MenuBars onClick={toggle} />
+      <MenuBars onClick={toggleDropdown} />
       <NavMenu>
         {menuData.map((item, index) => (
           <NavMenuLinks to={item.link} key={index}>
