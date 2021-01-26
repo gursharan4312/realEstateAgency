@@ -1,5 +1,5 @@
 import React from "react";
-import styled, { css } from "styled-components/macro";
+import styled from "styled-components/macro";
 import { Button } from "./Button";
 import { IoMdArrowRoundForward } from "react-icons/io";
 
@@ -46,7 +46,6 @@ function Card({ image, alt, heading, buttonLabel, buttonLink }) {
         css={`
           background: transparent;
           color: "transparent";
-          /* display: inline-block; */
           justify-content: flex-start;
           padding-left: 0;
           position: relative;

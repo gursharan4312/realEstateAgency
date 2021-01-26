@@ -155,7 +155,7 @@ function Navbar({ toggleDropdown, setTheme, theme, atHome }) {
         ))}
       </NavMenu>
       <NavBtn>
-        <Button primary to="/contact">
+        <Button primary="true" to="/contact">
           Contact Us
         </Button>
         <DarkThemeBtn>

@@ -14,8 +14,8 @@ const DropsownContainer = styled.div`
   display: grid;
   align-items: center;
   top: 0;
-  left: ${({ isopen }) => (isopen ? 0 : "100%")};
-  opacity: ${({ isopen }) => (isopen ? 1 : 0)};
+  left: ${({ isopen }) => (isopen === "true" ? 0 : "100%")};
+  opacity: ${({ isopen }) => (isopen === "true" ? 1 : 0)};
   transition: 0.5s ease-in-out;
 `;
 
@@ -56,7 +56,7 @@ const Dropdownlink = styled(Link)`
   cursor: pointer;
   transition: 0.6s ease-in-out;
   position: relative;
-  left: ${({ isOpen }) => (isOpen ? 0 : "100%")};
+  left: ${({ isopen }) => (isopen === "true" ? 0 : "100%")};
 
   &:hover {
     color: ${({ theme }) => theme.primaryColor};
@@ -69,20 +69,20 @@ const BtnWrap = styled.div`
 
 const Dropdown = ({ toggle, isOpen }) => {
   return (
-    <DropsownContainer isopen={isOpen} onClick={toggle}>
+    <DropsownContainer isopen={isOpen.toString()} onClick={toggle}>
       <Icon onClick={toggle}>
         <CloseIcon />
       </Icon>
       <DropdownWrapper>
         <DropdownMenu>
           {menuData.map((menu, i) => (
-            <Dropdownlink to={menu.link} key={i} isOpen={isOpen}>
+            <Dropdownlink to={menu.link} key={i} isopen={isOpen.toString()}>
               {menu.title}
             </Dropdownlink>
           ))}
         </DropdownMenu>
         <BtnWrap>
-          <Button primary round="true" big="true" to="/contact">
+          <Button primary="true" round="true" big="true" to="/contact">
             Contact Us
           </Button>
         </BtnWrap>

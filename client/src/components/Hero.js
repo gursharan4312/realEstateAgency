@@ -135,7 +135,7 @@ const Hero = ({ slides }) => {
               <h1>{slides[current].title}</h1>
               <p>{slides[current].price}</p>
               <Button
-                primary
+                primary="true"
                 to={slides[current].path}
                 css={`
                   max-width: 160px;

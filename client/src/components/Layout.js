@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import GlobalStyles, { themes } from "../globalStyles";
+import Helmet from "react-helmet";
 import Dropdown from "./Dropdown";
 import Footer from "./Footer";
 import Navbar from "./Navbar";
@@ -19,6 +20,11 @@ function Layout({ atHome, children }) {
   const [theme, setTheme] = useState("dark");
   return (
     <ThemeProvider theme={themes[theme]}>
+      <Helmet>
+        <style type="text/css">{`
+          @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');  
+    `}</style>
+      </Helmet>
       <GlobalStyles />
       <LayoutContainer>
         <Navbar
