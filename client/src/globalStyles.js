@@ -69,8 +69,8 @@ export const themes = {
     textColor: "#6c737d",
   },
   light: {
-    background: "#e1e1e1",
-    backgroundVariant: "#fff",
+    background: "#fff",
+    backgroundVariant: "#e1e1e1",
     primaryColor: "#cd853f",
     headingColor: "#000",
     headingColorInverted: "#fff",
