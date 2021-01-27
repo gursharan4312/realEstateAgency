@@ -7,6 +7,7 @@ export const InfoData = {
   paragraphTwo:
     "Optio iure aliquid eligendi perferendis veniam iste laborum qui, expedita laudantium. Maxime ab assumenda autem aspernatur a nemo, aut eius beatae iste!",
   buttonLabel: "View Homes",
+  buttonLink: "/homes",
   image: Image1,
   reverse: false,
   delay: 100,
@@ -19,6 +20,7 @@ export const InfoDataTwo = {
   paragraphTwo:
     "Optio iure aliquid eligendi perferendis veniam iste laborum qui, expedita laudantium. Maxime ab assumenda autem aspernatur a nemo, aut eius beatae iste!",
   buttonLabel: "View Homes",
+  buttonLink: "/homes",
   image: Image2,
   reverse: true,
   delay: 300,

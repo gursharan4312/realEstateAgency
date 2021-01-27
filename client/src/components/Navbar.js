@@ -76,6 +76,9 @@ const DarkThemeBtn = styled.div`
   .sun {
     color: #fff;
   }
+  .moon {
+    color: #000;
+  }
 `;
 
 const ToggleSwitch = styled.label`
@@ -169,7 +172,7 @@ function Navbar({ toggleDropdown, setTheme, theme, atHome }) {
             />
             <Slider className="slider"></Slider>
           </ToggleSwitch>
-          <FaMoon />
+          <FaMoon className="moon" />
         </DarkThemeBtn>
       </NavBtn>
     </Nav>

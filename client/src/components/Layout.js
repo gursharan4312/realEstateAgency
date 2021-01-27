@@ -11,6 +11,8 @@ const LayoutContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  background: ${({ theme }) => theme.background};
+  color: ${({ theme }) => theme.primaryText};
 `;
 const Content = styled.div``;
 

@@ -40,10 +40,10 @@ const ColumnRight = styled.div`
   }
 `;
 
-function CardSection({ itemOne, itemTwo }) {
+function CardSection({ itemOne, itemTwo, header }) {
   return (
     <Section>
-      <h1>Top Selections</h1>
+      <h1>{header}</h1>
       <Container>
         <ColumnLeft>
           <Fade top>

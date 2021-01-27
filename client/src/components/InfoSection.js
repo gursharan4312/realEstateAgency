@@ -7,7 +7,6 @@ const Section = styled.section`
   width: 100%;
   height: 100%;
   padding: 4rem 0;
-  background: ${({ theme }) => theme.background};
 `;
 const Container = styled.div`
   padding: 3rem calc((100vw - 1300px) / 2);
@@ -64,6 +63,7 @@ function InfoSection({
   paragraphOne,
   paragraphTwo,
   buttonLabel,
+  buttonLink,
   image,
   reverse,
   delay,
@@ -72,15 +72,15 @@ function InfoSection({
     <Section reverse={reverse}>
       <Container>
         <ColumnLeft reverse={reverse}>
-          <Slide right={reverse} left={!reverse} delay={200}>
+          <Slide right={reverse} left={!reverse}>
             <h1>{heading}</h1>
             <p>{paragraphOne}</p>
             <p>{paragraphTwo}</p>
-            <Button to={buttonLabel}>{buttonLabel}</Button>
+            <Button to={buttonLink}>{buttonLabel}</Button>
           </Slide>
         </ColumnLeft>
         <ColumnRight reverse={reverse}>
-          <Slide right={!reverse} left={reverse} delay={200}>
+          <Slide right={!reverse} left={reverse}>
             <img src={image} alt="home" />
           </Slide>
         </ColumnRight>

@@ -3,6 +3,7 @@ import styled, { css } from "styled-components/macro";
 import { Button } from "./Button";
 import { IoMdArrowRoundForward } from "react-icons/io";
 import { IoArrowForward, IoArrowBack } from "react-icons/io5";
+import Fade from "react-reveal/Fade";
 
 const HeroSection = styled.section`
   height: 100vh;
@@ -132,18 +133,20 @@ const Hero = ({ slides }) => {
           <HeroSlider>
             <HeroImage src={slides[current].image} alt={slides[current].alt} />
             <HeroContent>
-              <h1>{slides[current].title}</h1>
-              <p>{slides[current].price}</p>
-              <Button
-                primary="true"
-                to={slides[current].path}
-                css={`
-                  max-width: 160px;
-                `}
-              >
-                {slides[current].label}
-                <Arrow />
-              </Button>
+              <Fade right>
+                <h1>{slides[current].title}</h1>
+                <p>{slides[current].price}</p>
+                <Button
+                  primary="true"
+                  to={slides[current].path}
+                  css={`
+                    max-width: 160px;
+                  `}
+                >
+                  {slides[current].label}
+                  <Arrow />
+                </Button>
+              </Fade>
             </HeroContent>
           </HeroSlider>
         </HeroSlide>

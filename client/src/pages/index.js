@@ -12,7 +12,7 @@ function index() {
       <Hero slides={SliderData} />
       <InfoSection {...InfoData} />
       <InfoSection {...InfoDataTwo} />
-      <CardSection {...CardData} />
+      <CardSection {...CardData} header="Featured" />
     </Layout>
   );
 }
