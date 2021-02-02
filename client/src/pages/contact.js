@@ -2,6 +2,7 @@ import Layout from "../components/Layout";
 import styled, { css } from "styled-components";
 import { FaMobileAlt, FaMapMarkerAlt } from "react-icons/fa";
 import { AiOutlineMail } from "react-icons/ai";
+import Slide from "react-reveal/Slide";
 
 const Container = styled.div`
   margin-top: 60px;
@@ -85,31 +86,35 @@ function Contact() {
     <Layout>
       <Container>
         <FormContainer>
-          <h1>Contact Us</h1>
+          <Slide left>
+            <h1>Contact Us</h1>
 
-          <Input placeholder="Your Name" />
+            <Input placeholder="Your Name" />
 
-          <Input placeholder="Your Email" />
+            <Input placeholder="Your Email" />
 
-          <Input placeholder=" Your Phone" />
-          <Input placeholder="Subject (optional)" />
-          <TextArea placeholder="Type your message here" rows={7}></TextArea>
-          <Button type="submit">Submit</Button>
+            <Input placeholder=" Your Phone" />
+            <Input placeholder="Subject (optional)" />
+            <TextArea placeholder="Type your message here" rows={7}></TextArea>
+            <Button type="submit">Submit</Button>
+          </Slide>
         </FormContainer>
         <RightColumn>
-          <h2>REST - Personal Real Estate Corporation</h2>
-          <p>REST Pacafic Realty Ltd.</p>
-          <ul>
-            <li>
-              <FaMapMarkerAlt /> 1234 12 street, surrey BC V4C 123
-            </li>
-            <li>
-              <FaMobileAlt /> 6043333333
-            </li>
-            <li>
-              <AiOutlineMail /> contact@rest.ca
-            </li>
-          </ul>
+          <Slide right>
+            <h2>REST - Personal Real Estate Corporation</h2>
+            <p>REST Pacafic Realty Ltd.</p>
+            <ul>
+              <li>
+                <FaMapMarkerAlt /> 1234 12 street, surrey BC V4C 123
+              </li>
+              <li>
+                <FaMobileAlt /> 6043333333
+              </li>
+              <li>
+                <AiOutlineMail /> contact@rest.ca
+              </li>
+            </ul>
+          </Slide>
         </RightColumn>
       </Container>
     </Layout>

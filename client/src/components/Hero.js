@@ -44,7 +44,7 @@ const HeroImage = styled.img`
   width: 100vw;
   height: 100vh;
   object-fit: cover;
-  filter: brightness(70%);
+  /* filter: brightness(90%); */
 `;
 const HeroContent = styled.div`
   position: relative;
@@ -56,14 +56,16 @@ const HeroContent = styled.div`
   color: #fff;
 
   h1 {
-    font-size: clamp(1rem, 8vw, 2rem);
+    font-size: clamp(1rem, 8vw, 3.5rem);
     font-weight: 400;
     text-transform: uppercase;
     text-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
     text-align: left;
     margin-bottom: 0.8rem;
+    text-shadow: 0 0 5px #000;
   }
   p {
+    text-shadow: 0 0 5px #000;
     text-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
     margin-bottom: 0.2rem;
   }
