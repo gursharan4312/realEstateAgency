@@ -16,7 +16,7 @@ const LayoutContainer = styled.div`
 `;
 const Content = styled.div``;
 
-function Layout({ atHome, children }) {
+function Layout({ atHome, children, hideFooter }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
   const [theme, setTheme] = useState("dark");
@@ -37,7 +37,7 @@ function Layout({ atHome, children }) {
         />
         <Dropdown isOpen={isDropdownOpen} toggle={toggleDropdown} />
         <Content>{children}</Content>
-        <Footer />
+        {!hideFooter && <Footer />}
       </LayoutContainer>
     </ThemeProvider>
   );

@@ -7,7 +7,7 @@ const FooterSection = styled.footer`
   background: ${({ theme }) => theme.backgroundVariant};
 `;
 const Container = styled.div`
-  padding: 3rem calc((100vw - 1300px) / 2);
+  padding: 3rem calc((100% - 1300px) / 2);
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
