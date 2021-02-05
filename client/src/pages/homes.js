@@ -50,7 +50,7 @@ const HomesPage = () => {
         </MapWrapper>
         <ListWrapper>
           {
-            homesList.map((home,i)=><ListCard {...home} />)
+            homesList.map((home,i)=><ListCard key={i} {...home} />)
           }
           <Footer />
         </ListWrapper>
