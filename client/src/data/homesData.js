@@ -3,7 +3,9 @@ import House2 from "../images/house2.jpg";
 import House3 from "../images/house3.jpg";
 export const homes = [
   {
+    _id: "1",
     title: "11840 96Ave Delta, BC V4C 3W8",
+    address: "11840 96Ave Delta, BC V4C 3W8",
     name: "3bdr House",
     images: [House1, House2, House3],
     price: 200000,
@@ -19,7 +21,9 @@ export const homes = [
     },
   },
   {
+    _id: "2",
     title: "Un-known address",
+    address: "Un-known address",
     name: "5bdr House",
     images: [House1, House2, House3],
     price: 300000,

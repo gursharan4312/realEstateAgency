@@ -5,12 +5,14 @@ import About from "./pages/about";
 import Contact from "./pages/contact";
 import Homes from "./pages/homes";
 import Rentals from "./pages/rentals";
+import HomeDetails from "./pages/HomeDetails";
 function App() {
   return (
     <Switch>
       <Route exact path="/" component={Index} />
       <Route path="/about" component={About} />
       <Route path="/contact" component={Contact} />
+      <Route path="/homes/:id" component={HomeDetails} />
       <Route path="/homes" component={Homes} />
       <Route path="/rentals" component={Rentals} />
       <Route component={NotFound} />
