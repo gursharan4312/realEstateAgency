@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styled, { css } from "styled-components";
+import { useHistory } from "react-router-dom";
 import { IoChevronForward, IoChevronBack } from "react-icons/io5";
 import { BsDot } from "react-icons/bs";
 
@@ -72,6 +73,7 @@ const CardContent = styled.div`
 `;
 
 function ListCard({
+  _id,
   images,
   title,
   price,
@@ -82,13 +84,14 @@ function ListCard({
   size,
   pets,
 }) {
+  let history = useHistory();
   const [selectedImg, setSelectedImg] = useState(0);
   const forward = () => setSelectedImg((selectedImg + 1) % images.length);
   const backward = () =>
     setSelectedImg(selectedImg === 0 ? images.length - 1 : selectedImg - 1);
   return (
     <CardWrapper>
-      <ImagesWrapper>
+      <ImagesWrapper onClick={() => history.push(`/homes/${_id}`)}>
         <BackwardArrow onClick={backward} />
         <ImagesWrapperInner>
           <img src={images[selectedImg]} alt="card" />

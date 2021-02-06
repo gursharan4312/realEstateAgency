@@ -19,6 +19,8 @@ export const homes = [
       lat: 49.17682,
       lng: -122.8944,
     },
+    details:
+      "This over 6000 SqFT beautiful home located in the heart of White Rock has spectacular panoramic ocean views. Absolutely charming, this house has an open concept living with the ease of a built in elevator for easy access to all floors. Top of the line finishings galore, quality euro-tiles and hardwood throughout, 2 gas fireplaces, built in a/c & chef's delight gourmet kitchen with separate pantry and massive living area perfect for entertaining. Also incl. are 2 large master bedrooms, 6 bathrooms, 2 powder. Private covered terrace on 2 levels to enjoy views from sunrise to sunset. Basement includes large 2 bdrm suite and theatre room. Heated garage lots parking avail. for RV, boat, motorhome. Cleaner air & more sunshine too! Look no further! To Book a Showing, Visit: https://hopestreet.ca/rental/8-bedroom-gorgeous-house-for-rent-in-white-rock",
   },
   {
     _id: "2",
@@ -37,5 +39,7 @@ export const homes = [
       lat: 49.17682,
       lng: -122.8904,
     },
+    details:
+      "This over 6000 SqFT beautiful home located in the heart of White Rock has spectacular panoramic ocean views. Absolutely charming, this house has an open concept living with the ease of a built in elevator for easy access to all floors. Top of the line finishings galore, quality euro-tiles and hardwood throughout, 2 gas fireplaces, built in a/c & chef's delight gourmet kitchen with separate pantry and massive living area perfect for entertaining. Also incl. are 2 large master bedrooms, 6 bathrooms, 2 powder. Private covered terrace on 2 levels to enjoy views from sunrise to sunset. Basement includes large 2 bdrm suite and theatre room. Heated garage lots parking avail. for RV, boat, motorhome. Cleaner air & more sunshine too! Look no further! To Book a Showing, Visit: https://hopestreet.ca/rental/8-bedroom-gorgeous-house-for-rent-in-white-rock",
   },
 ];

@@ -1,12 +1,17 @@
 import { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import styled, { css } from "styled-components";
 import Layout from "../components/Layout";
 import { homes } from "../data/homesData";
 import { BsDot } from "react-icons/bs";
 import { FaBed, FaBath } from "react-icons/fa";
 import { GiResize } from "react-icons/gi";
-import { IoChevronForward, IoChevronBack } from "react-icons/io5";
 import { Button } from "../components/Button";
+import {
+  IoChevronForward,
+  IoChevronBack,
+  IoArrowBackOutline,
+} from "react-icons/io5";
 
 const Container = styled.div`
   margin-top: calc(60px + 1rem);
@@ -21,6 +26,7 @@ const Header = styled.div`
   background: ${({ theme }) => theme.backgroundVariant};
   padding: 2rem;
 `;
+
 const ulStyles = css`
   display: flex;
   list-style-type: none;
@@ -31,6 +37,8 @@ const ulStyles = css`
   }
 `;
 const HeaderFirstSection = styled.div`
+  display: flex;
+  align-items: center;
   ul {
     ${ulStyles}
     margin-bottom: 0.5rem;
@@ -43,6 +51,15 @@ const HeaderFirstSection = styled.div`
   }
   .home-address {
     font-size: 0.9rem;
+  }
+`;
+const BackButton = styled(IoArrowBackOutline)`
+  font-size: 2.2rem;
+  cursor: pointer;
+  margin-right: 1rem;
+  transition: 0.3s all ease-in-out;
+  &:hover {
+    transform: scale(1.2);
   }
 `;
 const HeaderSecondSection = styled.div`
@@ -131,9 +148,40 @@ const TextArea = styled.textarea`
   ${inputCss}
 `;
 
+const HomeDetailsSection = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+const LeftColumn = styled.div`
+  width: 50%;
+  h2 {
+    font-size: 1.3rem;
+    font-weight: 400;
+    margin-bottom: 1rem;
+  }
+  ul {
+    list-style: none;
+    padding: 1rem;
+    background: ${({ theme }) => theme.backgroundVariant};
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 1rem;
+    width: 100%;
+    li {
+      /* margin: 0.5rem 0; */
+    }
+  }
+  p {
+    margin: 1rem 0;
+  }
+`;
+const RightColumn = styled.div``;
+
 function HomeDetails({ match }) {
+  let history = useHistory();
   const [home, setHome] = useState();
   const [selectedImg, setSelectedimg] = useState(0);
+  const [extendReadmore, setExtendReadmore] = useState(false);
 
   const nextImg = () => setSelectedimg((selectedImg + 1) % home.images.length);
   const prevImg = () =>
@@ -158,18 +206,21 @@ function HomeDetails({ match }) {
       <Container>
         <Header>
           <HeaderFirstSection>
-            <ul>
-              <li className="home-price">${home.price}</li>
-              <li>
-                <BsDot />
-              </li>
-              <li> {home.type}</li>
-              <li>
-                <BsDot />
-              </li>
-              <li className="time"> {home.date}</li>
-            </ul>
-            <span className="home-address">{home.address}</span>
+            <BackButton onClick={() => history.goBack()} />
+            <div>
+              <ul>
+                <li className="home-price">${home.price}</li>
+                <li>
+                  <BsDot />
+                </li>
+                <li> {home.type}</li>
+                <li>
+                  <BsDot />
+                </li>
+                <li className="time"> {home.date}</li>
+              </ul>
+              <span className="home-address">{home.address}</span>
+            </div>
           </HeaderFirstSection>
           <HeaderSecondSection>
             <ul>
@@ -202,6 +253,43 @@ function HomeDetails({ match }) {
             <Button type="submit">Submit</Button>
           </ContactSection>
         </Body>
+        <HomeDetailsSection>
+          <LeftColumn>
+            <h2>About {home.title}</h2>
+            <div className="details">
+              <ul>
+                <li>
+                  <strong>Property Type:</strong>{" "}
+                  {home.type ? home.type : "No Info"}
+                </li>
+                <li>
+                  <strong>Parking : </strong>
+                  {home.parking ? home.parking : "No Info"}
+                </li>
+
+                <li>
+                  <strong>Furnished :</strong>{" "}
+                  {home.furnished ? home.furnished : "No Info"}
+                </li>
+                <li>
+                  <strong>Year Built :</strong>{" "}
+                  {home.yearBuilt ? home.yearbuilt : "No Info"}
+                </li>
+              </ul>
+              <p>
+                {home.details.length > 250 && !extendReadmore ? (
+                  <>{home.details.substr(0, 250)}......</>
+                ) : (
+                  home.details
+                )}
+                <Button onClick={() => setExtendReadmore(!extendReadmore)}>
+                  Read {extendReadmore ? "less" : "more"}
+                </Button>
+              </p>
+            </div>
+          </LeftColumn>
+          <RightColumn></RightColumn>
+        </HomeDetailsSection>
       </Container>
     </Layout>
   );
