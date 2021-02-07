@@ -1,9 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
 import styled, { useTheme } from "styled-components";
 import { BsDot } from "react-icons/bs";
 import { mapStyles } from "../globalStyles";
 import { homes } from "../data/homesData";
+import MarkerClusterer from "@googlemaps/markerclustererplus";
 
 const InfoWindowContent = styled.div`
   display: flex;
@@ -28,6 +29,30 @@ const MapContainer = ({ google }) => {
   useEffect(() => {
     setMapStyle(theme.name === "dark" ? mapStyles.dark : mapStyles.light);
   }, [theme]);
+
+  const setMarkers = (props, map) => {
+    let locations = homes;
+    let markers =
+      locations &&
+      locations.map((location) => {
+        let marker = new google.maps.Marker({
+          position: location.position,
+          title: location.title,
+        });
+        marker.addListener("click", () => {
+          setSelectedPlace(location);
+          setActiveMarker(marker);
+          setShowInfoWindow(true);
+        });
+        return marker;
+      });
+    new MarkerClusterer(map, markers, {
+      imagePath:
+        "https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m",
+      gridSize: 10,
+      minimumClusterSize: 2,
+    });
+  };
   return (
     <div key={mapStyle}>
       <Map
@@ -43,28 +68,8 @@ const MapContainer = ({ google }) => {
             setShowInfoWindow(false);
           }
         }}
+        onReady={(props, map) => setMarkers(props, map)}
       >
-        {homes.map((home, i) => (
-          <Marker
-            key={i}
-            title={home.title}
-            name={home.name}
-            images={home.images}
-            price={home.price}
-            type={home.type}
-            date={home.date}
-            rooms={home.rooms}
-            washrooms={home.washrooms}
-            size={home.size}
-            pets={home.pets}
-            position={home.position}
-            onClick={(props, marker) => {
-              setSelectedPlace(props);
-              setActiveMarker(marker);
-              setShowInfoWindow(true);
-            }}
-          ></Marker>
-        ))}
         <InfoWindow
           marker={activeMarker}
           visible={showInfoWindow}
