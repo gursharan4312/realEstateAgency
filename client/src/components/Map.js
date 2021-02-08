@@ -1,10 +1,12 @@
-import { useState, useEffect, useRef } from "react";
-import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
+import { useState, useEffect, useContext } from "react";
+import { useHistory } from "react-router-dom";
+import { Map, InfoWindow, GoogleApiWrapper } from "google-maps-react";
+import MarkerClusterer from "@googlemaps/markerclustererplus";
+import { DispatchContext } from "../context/GlobalContext";
 import styled, { useTheme } from "styled-components";
 import { BsDot } from "react-icons/bs";
 import { mapStyles } from "../globalStyles";
 import { homes } from "../data/homesData";
-import MarkerClusterer from "@googlemaps/markerclustererplus";
 
 const InfoWindowContent = styled.div`
   display: flex;
@@ -13,11 +15,14 @@ const InfoWindowContent = styled.div`
   img {
     object-fit: cover;
     max-height: 100px;
+    cursor: pointer;
   }
 `;
 
 const MapContainer = ({ google }) => {
   const theme = useTheme();
+  const history = useHistory();
+  const dispatch = useContext(DispatchContext);
   const [showInfoWindow, setShowInfoWindow] = useState(false);
   const [activeMarker, setActiveMarker] = useState({});
   const [selectedPlace, setSelectedPlace] = useState({});
@@ -43,6 +48,7 @@ const MapContainer = ({ google }) => {
           setSelectedPlace(location);
           setActiveMarker(marker);
           setShowInfoWindow(true);
+          dispatch({ type: "SET_SELECTEDITEM", payload: location });
         });
         return marker;
       });
@@ -66,6 +72,7 @@ const MapContainer = ({ google }) => {
           if (showInfoWindow) {
             setActiveMarker(null);
             setShowInfoWindow(false);
+            dispatch({ type: "REMOVE_SELECTEDITEM" });
           }
         }}
         onReady={(props, map) => setMarkers(props, map)}
@@ -82,6 +89,7 @@ const MapContainer = ({ google }) => {
             <img
               src={selectedPlace.images ? selectedPlace.images[0] : ""}
               alt={selectedPlace.type}
+              onClick={() => history.push(`/homes/${selectedPlace._id}`)}
             />
             <h3>{selectedPlace.title}</h3>
             <span>${selectedPlace.price}</span>

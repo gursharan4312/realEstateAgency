@@ -1,11 +1,11 @@
-import {useState} from 'react'
+import { useState, useContext } from "react";
+import { StateContext } from "../context/GlobalContext";
 import Layout from "../components/Layout";
 import styled from "styled-components";
-import GoogleApiWrapper from '../components/Map'
-import {homes} from '../data/homesData'
-import ListCard from '../components/ListCard';
-import Footer from '../components/Footer';
-
+import GoogleApiWrapper from "../components/Map";
+import { homes } from "../data/homesData";
+import ListCard from "../components/ListCard";
+import Footer from "../components/Footer";
 
 const Container = styled.div`
   margin-top: 60px;
@@ -26,32 +26,34 @@ const MapWrapper = styled.div`
   width: 70%;
   max-width: 1920px;
   height: calc(100vh - 60px);
-  min-height:200px;
+  min-height: 200px;
   /* max-height: 500px; */
   position: relative;
 `;
 const ListWrapper = styled.div`
-  width:30%;
+  width: 30%;
   padding: 0 1.5rem;
   overflow-y: scroll;
   height: calc(100vh - 60px);
 `;
 
 const HomesPage = () => {
-  const [homesList,setHomesList] = useState([...homes])
+  const state = useContext(StateContext);
+  const [homesList, setHomesList] = useState([...homes]);
   return (
     <Layout hideFooter={true}>
-      <Container>
-        {/* <h1 >Homes near you</h1> */}
-      </Container>
+      <Container>{/* <h1>Homes near you</h1> */}</Container>
       <ContainerInner>
-        <MapWrapper >
-          <GoogleApiWrapper list={homesList} />
+        <MapWrapper>
+          <GoogleApiWrapper />
         </MapWrapper>
         <ListWrapper>
-          {
-            homesList.map((home,i)=><ListCard key={i} {...home} />)
-          }
+          {state.map.selectedItem !== null && (
+            <ListCard {...state.map.selectedItem} />
+          )}
+          {homesList.map((home, i) => (
+            <ListCard key={i} {...home} />
+          ))}
           <Footer />
         </ListWrapper>
       </ContainerInner>
