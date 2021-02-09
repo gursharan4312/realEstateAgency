@@ -1,23 +1,13 @@
 import { useState, useEffect, useContext } from "react";
+import ReactDOM from "react-dom";
 import { useHistory } from "react-router-dom";
 import { Map, InfoWindow, GoogleApiWrapper } from "google-maps-react";
 import MarkerClusterer from "@googlemaps/markerclustererplus";
 import { DispatchContext } from "../context/GlobalContext";
-import styled, { useTheme } from "styled-components";
-import { BsDot } from "react-icons/bs";
+import { useTheme } from "styled-components";
 import { mapStyles } from "../globalStyles";
 import { homes } from "../data/homesData";
-
-const InfoWindowContent = styled.div`
-  display: flex;
-  flex-direction: column;
-  color: #000;
-  img {
-    object-fit: cover;
-    max-height: 100px;
-    cursor: pointer;
-  }
-`;
+import MapInfoWindow from "./MapInfoWindow";
 
 const MapContainer = ({ google }) => {
   const theme = useTheme();
@@ -27,6 +17,7 @@ const MapContainer = ({ google }) => {
   const [activeMarker, setActiveMarker] = useState({});
   const [selectedPlace, setSelectedPlace] = useState({});
   const [mapStyle, setMapStyle] = useState(mapStyles.dark);
+
   const location = {
     lng: -122.85,
     lat: 49.183333,
@@ -59,6 +50,13 @@ const MapContainer = ({ google }) => {
       minimumClusterSize: 2,
     });
   };
+
+  const openInfoWindow = () => {
+    ReactDOM.render(
+      <MapInfoWindow selectedPlace={selectedPlace} history={history} />,
+      document.getElementById("infowindow-content")
+    );
+  };
   return (
     <div key={mapStyle}>
       <Map
@@ -83,27 +81,11 @@ const MapContainer = ({ google }) => {
           onClose={() => {
             setActiveMarker(null);
             setShowInfoWindow(false);
+            dispatch({ type: "REMOVE_SELECTEDITEM" });
           }}
+          onOpen={openInfoWindow}
         >
-          <InfoWindowContent>
-            <img
-              src={selectedPlace.images ? selectedPlace.images[0] : ""}
-              alt={selectedPlace.type}
-              onClick={() => history.push(`/homes/${selectedPlace._id}`)}
-            />
-            <h3>{selectedPlace.title}</h3>
-            <span>${selectedPlace.price}</span>
-            <span>
-              {selectedPlace.type} <BsDot /> {selectedPlace.date}
-            </span>
-            <span>
-              {selectedPlace.rooms} BED <BsDot /> {selectedPlace.washrooms} BATH{" "}
-              <BsDot /> {selectedPlace.size}FT²
-            </span>
-            <span>
-              PETS : {selectedPlace.pets ? " allowed" : " not allowed"}
-            </span>
-          </InfoWindowContent>
+          <div id="infowindow-content" />
         </InfoWindow>
       </Map>
     </div>

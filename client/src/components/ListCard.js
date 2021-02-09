@@ -91,10 +91,14 @@ function ListCard({
     setSelectedImg(selectedImg === 0 ? images.length - 1 : selectedImg - 1);
   return (
     <CardWrapper>
-      <ImagesWrapper onClick={() => history.push(`/homes/${_id}`)}>
+      <ImagesWrapper>
         <BackwardArrow onClick={backward} />
         <ImagesWrapperInner>
-          <img src={images[selectedImg]} alt="card" />
+          <img
+            src={images[selectedImg]}
+            alt="card"
+            onClick={() => history.push(`/homes/${_id}`)}
+          />
         </ImagesWrapperInner>
         <ForwardArrow onClick={forward} />
       </ImagesWrapper>
