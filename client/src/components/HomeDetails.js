@@ -1,8 +1,5 @@
-import { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useState } from "react";
 import styled, { css } from "styled-components";
-import Layout from "../components/Layout";
-import { homes } from "../data/homesData";
 import { BsDot } from "react-icons/bs";
 import { FaBed, FaBath } from "react-icons/fa";
 import { GiResize } from "react-icons/gi";

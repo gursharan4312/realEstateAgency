@@ -70,6 +70,14 @@ const CardContent = styled.div`
   span {
     margin: 0.25rem 0;
   }
+  h2 {
+    transition: 0.3s;
+    &:hover {
+      color: ${({ theme }) => theme.primaryColor};
+      transform: scale(1.02);
+      cursor: pointer;
+    }
+  }
 `;
 
 function ListCard({
@@ -103,7 +111,7 @@ function ListCard({
         <ForwardArrow onClick={forward} />
       </ImagesWrapper>
       <CardContent>
-        <h2>{title}</h2>
+        <h2 onClick={() => history.push(`/homes/${_id}`)}>{title}</h2>
         <span>${price}</span>
         <span>
           {type} <BsDot /> {date}

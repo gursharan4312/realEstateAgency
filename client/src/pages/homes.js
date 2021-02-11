@@ -44,7 +44,7 @@ const ListWrapper = styled.div`
   }
 `;
 
-const HomesPage = ({ match }) => {
+const HomesPage = ({ match, history }) => {
   const state = useContext(StateContext);
   const [homesList, setHomesList] = useState([...homes]);
   const [openHomeDetails, setOpenHomeDetails] = useState(false);
@@ -57,7 +57,6 @@ const HomesPage = ({ match }) => {
       );
       setOpenHomeDetails(true);
     }
-    console.log("open");
   }, [match.params.id]);
   return (
     <Layout hideFooter={true}>
