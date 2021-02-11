@@ -3,6 +3,7 @@ import express from "express";
 import morgan from "morgan";
 import colors from "colors";
 import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
+import homesRoutes from "./routes/homeRoutes.js";
 const app = express();
 
 app.use(express.json());
@@ -11,6 +12,8 @@ app.use(morgan("dev"));
 app.get("/", (req, res) => {
   res.send("API is running");
 });
+
+app.use("/api/homes", homesRoutes);
 
 app.use(notFound);
 app.use(errorHandler);

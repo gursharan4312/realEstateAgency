@@ -24,3 +24,5 @@ const homeSchema = mongoose.Schema(
 );
 
 const Home = mongoose.model("Home", homeSchema);
+
+export default Home;
