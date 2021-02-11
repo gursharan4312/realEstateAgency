@@ -2,11 +2,13 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:5000/",
   "dependencies": {
     "@googlemaps/markerclustererplus": "^1.0.3",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.3",
     "@testing-library/user-event": "^12.6.2",
+    "axios": "^0.21.1",
     "google-maps-react": "^2.0.6",
     "react": "^17.0.1",
     "react-combine-reducers": "^1.1.1",

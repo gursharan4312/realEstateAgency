@@ -5,7 +5,6 @@ import About from "./pages/about";
 import Contact from "./pages/contact";
 import Homes from "./pages/homes";
 import Rentals from "./pages/rentals";
-import HomeDetails from "./pages/HomeDetails";
 function App() {
   return (
     <Switch>

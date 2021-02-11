@@ -1,4 +1,5 @@
 import { useState, useContext, useEffect } from "react";
+import axios from "axios";
 import { StateContext } from "../context/GlobalContext";
 import Layout from "../components/Layout";
 import styled from "styled-components";
@@ -46,9 +47,16 @@ const ListWrapper = styled.div`
 
 const HomesPage = ({ match, history }) => {
   const state = useContext(StateContext);
-  const [homesList, setHomesList] = useState([...homes]);
+  const [homesList, setHomesList] = useState([]);
   const [openHomeDetails, setOpenHomeDetails] = useState(false);
   const [selectedHome, setSelectedHome] = useState(null);
+
+  useEffect(async () => {
+    if (homesList.length === 0) {
+      const { data } = await axios.get("/api/homes");
+      setHomesList([...data]);
+    }
+  }, []);
 
   useEffect(() => {
     if (match.params.id) {
