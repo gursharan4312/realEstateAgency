@@ -1,13 +1,13 @@
 import { useState, useContext, useEffect } from "react";
 import axios from "axios";
-import { StateContext } from "../context/GlobalContext";
+import { StateContext, DispatchContext } from "../context/GlobalContext";
 import Layout from "../components/Layout";
 import styled from "styled-components";
 import GoogleApiWrapper from "../components/Map";
-import { homes } from "../data/homesData";
 import ListCard from "../components/ListCard";
 import Footer from "../components/Footer";
 import HomeDetails from "../components/HomeDetails";
+import Loading from "../components/Loading";
 
 const Container = styled.div`
   margin-top: 60px;
@@ -17,6 +17,7 @@ const Container = styled.div`
 `;
 
 const ContainerInner = styled.div`
+  margin-top: 60px;
   width: 100%;
   color: ${({ theme }) => theme.primaryText};
   display: ${({ display }) => display};
@@ -45,16 +46,24 @@ const ListWrapper = styled.div`
   }
 `;
 
-const HomesPage = ({ match, history }) => {
+const HomesPage = ({ match }) => {
   const state = useContext(StateContext);
-  const [homesList, setHomesList] = useState([]);
+  const { homes, loading, error } = state.homesList;
+  const dispatch = useContext(DispatchContext);
+  const [homesList, setHomesList] = useState(homes);
   const [openHomeDetails, setOpenHomeDetails] = useState(false);
   const [selectedHome, setSelectedHome] = useState(null);
 
   useEffect(async () => {
     if (homesList.length === 0) {
-      const { data } = await axios.get("/api/homes");
-      setHomesList([...data]);
+      dispatch({ type: "HOME_LIST_REQUEST" });
+      try {
+        const { data } = await axios.get("/api/homes");
+        setHomesList([...data]);
+        dispatch({ type: "HOME_LIST_SUCCESS", payload: [...data] });
+      } catch (e) {
+        dispatch({ type: "HOME_LIST_FAIL", payload: "Someting went wrong" });
+      }
     }
   }, []);
 
@@ -68,27 +77,33 @@ const HomesPage = ({ match, history }) => {
   }, [match.params.id]);
   return (
     <Layout hideFooter={true}>
-      <Container>{/* <h1>Homes near you</h1> */}</Container>
-      <ContainerInner display={openHomeDetails ? "none" : "flex"}>
-        <MapWrapper>
-          <GoogleApiWrapper />
-        </MapWrapper>
-        <ListWrapper>
-          {state.map.selectedItem !== null && (
-            <ListCard {...state.map.selectedItem} />
-          )}
-          <div
-            style={{
-              display: state.map.selectedItem === null ? "block" : "none",
-            }}
-          >
-            {homesList.map((home, i) => (
-              <ListCard key={i} {...home} />
-            ))}
-          </div>
-          <Footer />
-        </ListWrapper>
-      </ContainerInner>
+      {loading ? (
+        <Container>
+          <Loading />
+        </Container>
+      ) : (
+        <ContainerInner display={openHomeDetails ? "none" : "flex"}>
+          <MapWrapper>
+            <GoogleApiWrapper />
+          </MapWrapper>
+          <ListWrapper>
+            {state.map.selectedItem !== null && (
+              <ListCard {...state.map.selectedItem} />
+            )}
+            <div
+              style={{
+                display: state.map.selectedItem === null ? "block" : "none",
+              }}
+            >
+              {homesList.map((home, i) => (
+                <ListCard key={i} {...home} />
+              ))}
+            </div>
+            <Footer />
+          </ListWrapper>
+        </ContainerInner>
+      )}
+
       {openHomeDetails && selectedHome && (
         <HomeDetails
           home={selectedHome}

@@ -3,16 +3,17 @@ import ReactDOM from "react-dom";
 import { useHistory } from "react-router-dom";
 import { Map, InfoWindow, GoogleApiWrapper } from "google-maps-react";
 import MarkerClusterer from "@googlemaps/markerclustererplus";
-import { DispatchContext } from "../context/GlobalContext";
+import { DispatchContext, StateContext } from "../context/GlobalContext";
 import { useTheme } from "styled-components";
 import { mapStyles } from "../globalStyles";
-import { homes } from "../data/homesData";
 import MapInfoWindow from "./MapInfoWindow";
 
 const MapContainer = ({ google }) => {
   const theme = useTheme();
   const history = useHistory();
   const dispatch = useContext(DispatchContext);
+  const state = useContext(StateContext);
+  const { homes } = state.homesList;
   const [showInfoWindow, setShowInfoWindow] = useState(false);
   const [activeMarker, setActiveMarker] = useState({});
   const [selectedPlace, setSelectedPlace] = useState({});
