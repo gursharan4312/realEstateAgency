@@ -74,7 +74,7 @@ const HomesPage = ({ match }) => {
       );
       setOpenHomeDetails(true);
     }
-  }, [match.params.id]);
+  }, [match.params.id, homesList]);
   return (
     <Layout hideFooter={true}>
       {loading ? (
