@@ -31,8 +31,8 @@ export const themes = {
   },
   light: {
     name: "light",
-    background: "#f1f1f1",
-    backgroundVariant: "#d7d7d7",
+    background: "#e1e1e1",
+    backgroundVariant: "#c7c7c7",
     primaryColor: "#AC6C2D",
     headingColor: "#000",
     headingColorInverted: "#fff",

@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import GlobalStyles, { themes } from "../globalStyles";
 import Helmet from "react-helmet";
 import Dropdown from "./Dropdown";
 import Footer from "./Footer";
 import Navbar from "./Navbar";
+import { StateContext, DispatchContext } from "../context/GlobalContext";
 
 const LayoutContainer = styled.div`
   min-height: 100vh;
@@ -17,11 +18,18 @@ const LayoutContainer = styled.div`
 const Content = styled.div``;
 
 function Layout({ atHome, children, hideFooter }) {
+  const { theme } = useContext(StateContext);
+  const dispatch = useContext(DispatchContext);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
-  const [theme, setTheme] = useState("dark");
+  const setTheme = (payload) => {
+    dispatch({
+      type: "SET_THEME",
+      payload,
+    });
+  };
   return (
-    <ThemeProvider theme={themes[theme]}>
+    <ThemeProvider theme={themes[theme.selectedTheme]}>
       <Helmet>
         <style type="text/css">{`
           @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');  
@@ -32,7 +40,7 @@ function Layout({ atHome, children, hideFooter }) {
         <Navbar
           toggleDropdown={toggleDropdown}
           setTheme={setTheme}
-          theme={theme}
+          theme={theme.selectedTheme}
           atHome={atHome}
         />
         <Dropdown isOpen={isDropdownOpen} toggle={toggleDropdown} />
