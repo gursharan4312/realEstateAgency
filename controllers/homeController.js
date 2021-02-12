@@ -1,4 +1,4 @@
-import Home from "../modles/homeModal.js";
+import Home from "../models/homeModal.js";
 import asyncHandler from "express-async-handler";
 
 //@desc   get all homes list
@@ -13,27 +13,96 @@ const getAllHomes = asyncHandler(async (req, res) => {
 //@route  POST /api/homes
 //@access Public
 const addNewHome = asyncHandler(async (req, res) => {
+  let {
+    title,
+    address,
+    name,
+    images,
+    price,
+    type,
+    date,
+    rooms,
+    washrooms,
+    pets,
+    size,
+    position,
+    details,
+  } = req.body;
   const home = new Home({
-    title: "11840 96Ave Delta, BC V4C 3W8",
-    address: "11840 96Ave Delta, BC V4C 3W8",
-    name: "3bdr House",
-    images: ["/uploads/house1.jpg", "/uploads/house2.jpg"],
-    price: 200000,
-    type: "Apartment",
-    date: new Date(),
-    rooms: 3,
-    washrooms: 2,
-    pets: true,
-    size: 1500,
-    position: {
-      lat: 49.17682,
-      lng: -122.8944,
-    },
-    details:
-      "This over 6000 SqFT beautiful home located in the heart of White Rock has spectacular panoramic ocean views. Absolutely charming, this house has an open concept living with the ease of a built in elevator for easy access to all floors. Top of the line finishings galore, quality euro-tiles and hardwood throughout, 2 gas fireplaces, built in a/c & chef's delight gourmet kitchen with separate pantry and massive living area perfect for entertaining. Also incl. are 2 large master bedrooms, 6 bathrooms, 2 powder. Private covered terrace on 2 levels to enjoy views from sunrise to sunset. Basement includes large 2 bdrm suite and theatre room. Heated garage lots parking avail. for RV, boat, motorhome. Cleaner air & more sunshine too! Look no further! To Book a Showing, Visit: https://hopestreet.ca/rental/8-bedroom-gorgeous-house-for-rent-in-white-rock",
+    title,
+    address,
+    name,
+    images,
+    price,
+    type,
+    date,
+    rooms,
+    washrooms,
+    pets,
+    size,
+    position,
+    details,
   });
   const createdHome = await home.save();
   res.status(201).json(createdHome);
 });
 
-export { getAllHomes, addNewHome };
+// @desc    Update a home
+// @route   PUT /api/homes:id
+// @access  Private/Admin
+const updateHome = asyncHandler(async (req, res) => {
+  const {
+    title,
+    address,
+    name,
+    images,
+    price,
+    type,
+    date,
+    rooms,
+    washrooms,
+    pets,
+    size,
+    position,
+    details,
+  } = req.body;
+  const home = await Home.findById(req.params.id);
+
+  if (home) {
+    home.title = title;
+    home.address = address;
+    home.name = name;
+    home.images = images;
+    home.price = price;
+    home.type = type;
+    home.date = date;
+    home.rooms = rooms;
+    home.washrooms = washrooms;
+    home.pets = pets;
+    home.size = size;
+    home.position = position;
+    home.details = details;
+
+    const updatedHome = await Home.save();
+    res.status(201).json(updatedHome);
+  } else {
+    res.status(404);
+    throw new Error("Home Not Found");
+  }
+});
+
+// @desc    DELETE a home
+// @route   DELETE /api/homes/:id
+// @access  Private/Admin
+const deleteHome = asyncHandler(async (req, res) => {
+  const home = await Home.findById(req.params.id);
+  if (home) {
+    await home.remove();
+    res.json({ message: "Home removed" });
+  } else {
+    res.status(404);
+    throw new Error("Home not found");
+  }
+});
+
+export { getAllHomes, addNewHome, updateHome, deleteHome };
