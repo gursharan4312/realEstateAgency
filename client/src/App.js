@@ -4,7 +4,9 @@ import NotFound from "./pages/404";
 import About from "./pages/about";
 import Contact from "./pages/contact";
 import Homes from "./pages/homes";
-import Rentals from "./pages/rentals";
+import Admin from "./pages/admin";
+import Login from "./pages/login";
+import PrivateRoute from "./components/PrivateRoute";
 function App() {
   return (
     <Switch>
@@ -13,7 +15,8 @@ function App() {
       <Route path="/contact" component={Contact} />
       <Route path="/homes/:id" component={Homes} />
       <Route path="/homes" component={Homes} />
-      <Route path="/rentals" component={Rentals} />
+      <Route path="/login" component={Login} />
+      <PrivateRoute path="/admin" component={Admin} />
       <Route component={NotFound} />
     </Switch>
   );
