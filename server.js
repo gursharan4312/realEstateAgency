@@ -6,6 +6,7 @@ import colors from "colors";
 import connectDb from "./config/db.js";
 import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
 import homesRoutes from "./routes/homeRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
 const app = express();
 dotenv.config();
 connectDb();
@@ -21,6 +22,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/homes", homesRoutes);
+app.use("/api/users", userRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
