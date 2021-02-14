@@ -1,7 +1,14 @@
-import { useState } from "react";
+import { useState, useContext, useEffect, useRef } from "react";
 import Layout from "../components/Layout";
 import styled from "styled-components/macro";
 import { Button } from "../components/Button";
+import { StateContext, DispatchContext } from "../context/GlobalContext";
+import {
+  USER_LOGIN_FAIL,
+  USER_LOGIN_SUCCESS,
+  USER_LOGIN_REQUEST,
+  USER_LOGOUT,
+} from "../context/constants/userConstants";
 
 const FormContainer = styled.div`
   margin-top: 60px;
@@ -46,14 +53,23 @@ const Input = styled.input`
   }
 `;
 
-function Login() {
+function Login({ history, location }) {
+  const state = useContext(StateContext);
+  const { user } = state;
+  const dispatch = useContext(DispatchContext);
+  const fromPath = useRef(location.state ? location.state.from.pathname : "/");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const handleSubmit = () => {
-    if (email && password) {
-      alert("submit");
-    }
+    dispatch({ type: USER_LOGIN_SUCCESS, payload: { auth: true } });
   };
+
+  useEffect(() => {
+    if (user.user && user.user.auth) {
+      history.push(fromPath.current);
+    }
+  }, [user]);
+
   return (
     <Layout>
       <FormContainer>
