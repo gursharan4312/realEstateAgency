@@ -6,7 +6,7 @@ import { BsDot } from "react-icons/bs";
 
 const CardWrapper = styled.div`
   width: 100%;
-  height: 500px;
+  height: 300px;
   overflow: hidden;
   background: ${({ theme }) => theme.backgroundVariant};
   margin: 1rem 0;
@@ -14,7 +14,7 @@ const CardWrapper = styled.div`
 const ImagesWrapper = styled.div`
   display: flex;
   width: 100%;
-  height: 60%;
+  height: 80%;
   align-items: center;
   justify-content: space-between;
   position: relative;
@@ -111,15 +111,8 @@ function ListCard({
         <ForwardArrow onClick={forward} />
       </ImagesWrapper>
       <CardContent>
-        <h2 onClick={() => history.push(`/homes/${_id}`)}>{title}</h2>
+        <strong onClick={() => history.push(`/homes/${_id}`)}>{title}</strong>
         <span>${price}</span>
-        <span>
-          {type} <BsDot /> {date}
-        </span>
-        <span>
-          {rooms} BED <BsDot /> {washrooms} BATH <BsDot /> {size}FT²
-        </span>
-        <span>PETS : {pets ? " allowed" : " not allowed"}</span>
       </CardContent>
     </CardWrapper>
   );

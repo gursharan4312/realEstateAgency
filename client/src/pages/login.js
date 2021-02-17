@@ -116,7 +116,7 @@ function Login({ history, location }) {
             </InputGroup>
             <ButtonContainer>
               <Button onClick={handleSubmit}>Login</Button>
-              <Button onClick={() => history.goBack()}>Cancel</Button>
+              <Button onClick={history.goBack}>Cancel</Button>
             </ButtonContainer>
           </Form>
         </FormContainer>

@@ -11,11 +11,15 @@ const LayoutContainer = styled.div`
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   background: ${({ theme }) => theme.background};
   color: ${({ theme }) => theme.primaryText};
 `;
-const Content = styled.div``;
+const Content = styled.div`
+  height: 100%;
+  flex: 1;
+  position: relative;
+`;
 
 function Layout({ atHome, children, hideFooter, hideNav }) {
   const { theme } = useContext(StateContext);
