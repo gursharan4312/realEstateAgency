@@ -59,8 +59,6 @@ const authUser = asyncHandler(async (req, res) => {
     res.status(401);
     throw new Error("Invalid username or password");
   }
-
-  res.send({ email, password });
 });
 
 // @desc     get user profile
@@ -104,13 +102,13 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   if (user) {
     user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;
-    if (req.body.currentPassword && req.body.password) {
+    if (req.body.currentPassword && req.body.newPassword) {
       const match = await bcrypt.compare(
         req.body.currentPassword,
         user.password
       );
       if (match) {
-        user.password = req.body.password;
+        user.password = req.body.newPassword;
       } else {
         res.status(401);
         throw new Error("Password do not match");

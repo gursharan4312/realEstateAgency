@@ -1,6 +1,6 @@
 import { useState, useContext, useEffect, useRef } from "react";
 import Layout from "../components/Layout";
-import styled from "styled-components/macro";
+import styled from "styled-components";
 import { Button } from "../components/Button";
 import { StateContext, DispatchContext } from "../context/GlobalContext";
 import {
@@ -9,6 +9,8 @@ import {
   USER_LOGIN_REQUEST,
   USER_LOGOUT,
 } from "../context/constants/userConstants";
+import axios from "axios";
+import Loading from "../components/Loading";
 
 const FormContainer = styled.div`
   margin-top: 60px;
@@ -53,6 +55,12 @@ const Input = styled.input`
   }
 `;
 
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+`;
+
 function Login({ history, location }) {
   const state = useContext(StateContext);
   const { user } = state;
@@ -60,47 +68,59 @@ function Login({ history, location }) {
   const fromPath = useRef(location.state ? location.state.from.pathname : "/");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const handleSubmit = () => {
-    dispatch({ type: USER_LOGIN_SUCCESS, payload: { auth: true } });
+  const handleSubmit = async () => {
+    dispatch({ type: USER_LOGIN_REQUEST });
+    try {
+      const { data } = await axios.post("/api/users/login", {
+        email,
+        password,
+      });
+      dispatch({ type: USER_LOGIN_SUCCESS, payload: { ...data, auth: true } });
+      //adding token to localstorage
+      localStorage.setItem("userToken", data.token);
+    } catch (e) {
+      dispatch({ type: USER_LOGIN_FAIL, payload: e });
+      console.log(e);
+    }
   };
 
   useEffect(() => {
-    if (user.user && user.user.auth) {
+    if (user && user.auth) {
       history.push(fromPath.current);
     }
   }, [user]);
 
   return (
-    <Layout>
-      <FormContainer>
-        <Form>
-          <h2>Login as admin</h2>
-          <InputGroup>
-            Email:
-            <Input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </InputGroup>
-          <InputGroup>
-            Password:
-            <Input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </InputGroup>
-          <Button
-            css={`
-              margin: 0 auto;
-            `}
-            onClick={handleSubmit}
-          >
-            Login
-          </Button>
-        </Form>
-      </FormContainer>
+    <Layout hideFooter="true" hideNav="true">
+      {user.loading ? (
+        <Loading />
+      ) : (
+        <FormContainer>
+          <Form>
+            <h2>Login as admin</h2>
+            <InputGroup>
+              Email:
+              <Input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </InputGroup>
+            <InputGroup>
+              Password:
+              <Input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </InputGroup>
+            <ButtonContainer>
+              <Button onClick={handleSubmit}>Login</Button>
+              <Button onClick={() => history.goBack()}>Cancel</Button>
+            </ButtonContainer>
+          </Form>
+        </FormContainer>
+      )}
     </Layout>
   );
 }

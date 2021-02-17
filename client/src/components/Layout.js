@@ -17,7 +17,7 @@ const LayoutContainer = styled.div`
 `;
 const Content = styled.div``;
 
-function Layout({ atHome, children, hideFooter }) {
+function Layout({ atHome, children, hideFooter, hideNav }) {
   const { theme } = useContext(StateContext);
   const dispatch = useContext(DispatchContext);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -37,12 +37,15 @@ function Layout({ atHome, children, hideFooter }) {
       </Helmet>
       <GlobalStyles />
       <LayoutContainer>
-        <Navbar
-          toggleDropdown={toggleDropdown}
-          setTheme={setTheme}
-          theme={theme.selectedTheme}
-          atHome={atHome}
-        />
+        {!hideNav && (
+          <Navbar
+            toggleDropdown={toggleDropdown}
+            setTheme={setTheme}
+            theme={theme.selectedTheme}
+            atHome={atHome}
+          />
+        )}
+
         <Dropdown isOpen={isDropdownOpen} toggle={toggleDropdown} />
         <Content>{children}</Content>
         {!hideFooter && <Footer />}

@@ -65,7 +65,7 @@ const HomesPage = ({ match }) => {
         dispatch({ type: "HOME_LIST_FAIL", payload: "Someting went wrong" });
       }
     }
-  }, []);
+  }, [homesList]);
 
   useEffect(() => {
     if (match.params.id) {
