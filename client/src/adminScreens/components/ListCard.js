@@ -81,6 +81,7 @@ const CardContent = styled.div`
 `;
 
 function ListCard({
+  onClick,
   _id,
   images,
   title,
@@ -98,15 +99,11 @@ function ListCard({
   const backward = () =>
     setSelectedImg(selectedImg === 0 ? images.length - 1 : selectedImg - 1);
   return (
-    <CardWrapper className="list-card">
+    <CardWrapper className="list-card" onClick={onClick}>
       <ImagesWrapper>
         <BackwardArrow onClick={backward} />
         <ImagesWrapperInner>
-          <img
-            src={images[selectedImg]}
-            alt="card"
-            onClick={() => history.push(`/homes/${_id}`)}
-          />
+          <img src={images[selectedImg]} alt="card" />
         </ImagesWrapperInner>
         <ForwardArrow onClick={forward} />
       </ImagesWrapper>

@@ -13,12 +13,16 @@ const Column = styled.div`
   }
 `;
 
-function HomeGrid({ homesList }) {
+function HomeGrid({ homesList, setSelectedHome }) {
   console.log(homesList);
   return (
     <Column>
       {homesList.map((home) => (
-        <ListCard key={home._id} {...home} />
+        <ListCard
+          key={home._id}
+          {...home}
+          onClick={() => setSelectedHome(home)}
+        />
       ))}
     </Column>
   );

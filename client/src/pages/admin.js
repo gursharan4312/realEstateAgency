@@ -5,6 +5,7 @@ import HomeList from "../adminScreens/HomeList";
 import HomeGrid from "../adminScreens/HomeGrid";
 import { StateContext, DispatchContext } from "../context/GlobalContext";
 import axios from "axios";
+import HomeDetails from "../components/HomeDetails";
 
 const Container = styled.div`
   height: 100%;
@@ -53,6 +54,7 @@ function Admin() {
   const dispatch = useContext(DispatchContext);
   const { homes, loading, error } = state.homesList;
   const [homesList, setHomesList] = useState(homes);
+  const [selectedHome, setSelectedHome] = useState(null);
 
   const [openedTab, setOpnedTab] = useState(0);
   useEffect(async () => {
@@ -69,26 +71,40 @@ function Admin() {
   }, [homesList]);
   return (
     <Layout>
-      <Container>
-        <SideBar>
-          <SideBarSection
-            className={openedTab === 0 ? "selected" : ""}
-            onClick={() => setOpnedTab(0)}
-          >
-            <span>Property List</span>
-          </SideBarSection>
-          <SideBarSection
-            className={openedTab === 1 ? "selected" : ""}
-            onClick={() => setOpnedTab(1)}
-          >
-            <span>Property Grid</span>
-          </SideBarSection>
-        </SideBar>
-        <MainContent>
-          {openedTab === 0 && <HomeList homesList={homesList} />}
-          {openedTab === 1 && <HomeGrid homesList={homesList} />}
-        </MainContent>
-      </Container>
+      {!selectedHome ? (
+        <Container>
+          <SideBar>
+            <SideBarSection
+              className={openedTab === 0 ? "selected" : ""}
+              onClick={() => setOpnedTab(0)}
+            >
+              <span>Property List</span>
+            </SideBarSection>
+            <SideBarSection
+              className={openedTab === 1 ? "selected" : ""}
+              onClick={() => setOpnedTab(1)}
+            >
+              <span>Property Grid</span>
+            </SideBarSection>
+          </SideBar>
+          <MainContent>
+            {openedTab === 0 && (
+              <HomeList
+                homesList={homesList}
+                setSelectedHome={setSelectedHome}
+              />
+            )}
+            {openedTab === 1 && (
+              <HomeGrid
+                homesList={homesList}
+                setSelectedHome={setSelectedHome}
+              />
+            )}
+          </MainContent>
+        </Container>
+      ) : (
+        <HomeDetails home={selectedHome} back={() => setSelectedHome(null)} />
+      )}
     </Layout>
   );
 }

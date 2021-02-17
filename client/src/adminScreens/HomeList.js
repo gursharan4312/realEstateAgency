@@ -33,7 +33,16 @@ const Home = styled.tr`
   }
 `;
 
-function HomeList({ homesList }) {
+const HomeLink = styled.span`
+  color: ${({ theme }) => theme.primaryText};
+  text-decoration: none;
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+`;
+
+function HomeList({ homesList, setSelectedHome }) {
   return (
     <Container>
       <Homes>
@@ -48,7 +57,11 @@ function HomeList({ homesList }) {
         </HomeListHeader>
         {homesList.map((home) => (
           <Home key={home._id}>
-            <td className="address-col">{home.address}</td>
+            <td className="address-col">
+              <HomeLink onClick={() => setSelectedHome(home)}>
+                {home.address}
+              </HomeLink>
+            </td>
             <td>{home.price}</td>
             <td>{home.type}</td>
             <td>{home.rooms}</td>

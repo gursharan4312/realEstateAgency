@@ -46,7 +46,7 @@ const ListWrapper = styled.div`
   }
 `;
 
-const HomesPage = ({ match }) => {
+const HomesPage = ({ match, history }) => {
   const state = useContext(StateContext);
   const { homes, loading, error } = state.homesList;
   const dispatch = useContext(DispatchContext);
@@ -110,7 +110,8 @@ const HomesPage = ({ match }) => {
           back={() => {
             setOpenHomeDetails(false);
             setSelectedHome(null);
-            match.params.id = undefined;
+            // match.params.id = undefined;
+            history.goBack();
           }}
         />
       )}
