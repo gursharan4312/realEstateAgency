@@ -7,10 +7,6 @@ const Column = styled.div`
   flex-wrap: wrap;
   justify-content: space-around;
   align-items: center;
-  .list-card {
-    width: 25%;
-    min-width: 300px;
-  }
 `;
 
 function HomeGrid({ homesList, setSelectedHome }) {

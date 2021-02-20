@@ -6,11 +6,15 @@ import { FiEdit } from "react-icons/fi";
 import { AiFillDelete } from "react-icons/ai";
 
 const CardWrapper = styled.div`
-  width: 100%;
-  height: fit-content;
+  width: 30%;
+  min-width: 300px;
+  /* height: fit-content; */
   overflow: hidden;
   background: ${({ theme }) => theme.backgroundVariant};
   margin: 1rem 0.5rem;
+  @media screen and (max-width: 768px) {
+    width: 45%;
+  }
 `;
 const ImagesWrapper = styled.div`
   display: flex;
