@@ -6,43 +6,52 @@ import HomeGrid from "../adminScreens/HomeGrid";
 import { StateContext, DispatchContext } from "../context/GlobalContext";
 import axios from "axios";
 import HomeDetails from "../components/HomeDetails";
+import { GoDashboard } from "react-icons/go";
+import { FaListUl } from "react-icons/fa";
+import { BsGrid } from "react-icons/bs";
 
 const Container = styled.div`
   height: 100%;
-
-  padding: 0 calc((100vw - 1920px) / 2);
+  padding: 0 calc((100vw - 1300px) / 2);
   padding-top: 60px;
-  display: flex;
-  justify-content: space-between;
-  /* align-items: center; */
-  flex-wrap: wrap;
-  gap: 1rem;
-  /* @media screen and (min-width: 768px) { */
-  /* position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0; */
-  /* } */
 `;
 
 const SideBar = styled.div`
-  width: 30%;
-  max-width: 400px;
-  min-width: 200px;
-  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid ${({ theme }) => theme.secondaryText};
+  overflow-x: auto;
+  padding: 0 0.5rem;
 `;
 const SideBarSection = styled.div`
   padding: 0.5rem 1rem;
-  margin: 1rem 0;
-  transition: 0.4s all ease-in-out;
+  margin: 1.5rem 1rem 0;
+  border-bottom: 2px solid transparent;
+  color: ${({ theme }) => theme.secondaryText};
+  white-space: nowrap;
+
+  @media screen and (max-width: 480px) {
+    margin: 1.5rem 0 0;
+    padding: 0.5rem;
+  }
   &:hover {
-    background: ${({ theme }) => theme.backgroundVariant};
+    border-color: ${({ theme }) => theme.primaryText};
     cursor: pointer;
-    transform: scaleY(1.1);
   }
   &.selected {
-    background: ${({ theme }) => theme.backgroundVariant};
+    border-color: ${({ theme }) => theme.primaryColor};
+    color: ${({ theme }) => theme.primaryText};
+  }
+
+  svg {
+    font-size: 1.2rem;
+    vertical-align: middle;
+    margin-right: 0.3rem;
+  }
+  span {
+    vertical-align: middle;
   }
 `;
 const MainContent = styled.div`
@@ -56,7 +65,7 @@ function Admin() {
   const [homesList, setHomesList] = useState(homes);
   const [selectedHome, setSelectedHome] = useState(null);
 
-  const [openedTab, setOpnedTab] = useState(0);
+  const [openedTab, setOpnedTab] = useState(null);
   useEffect(async () => {
     if (homesList.length === 0) {
       dispatch({ type: "HOME_LIST_REQUEST" });
@@ -72,36 +81,51 @@ function Admin() {
   return (
     <Layout>
       {!selectedHome ? (
-        <Container>
-          <SideBar>
-            <SideBarSection
-              className={openedTab === 0 ? "selected" : ""}
-              onClick={() => setOpnedTab(0)}
-            >
-              <span>Property List</span>
-            </SideBarSection>
-            <SideBarSection
-              className={openedTab === 1 ? "selected" : ""}
-              onClick={() => setOpnedTab(1)}
-            >
-              <span>Property Grid</span>
-            </SideBarSection>
-          </SideBar>
-          <MainContent>
-            {openedTab === 0 && (
-              <HomeList
-                homesList={homesList}
-                setSelectedHome={setSelectedHome}
-              />
-            )}
-            {openedTab === 1 && (
-              <HomeGrid
-                homesList={homesList}
-                setSelectedHome={setSelectedHome}
-              />
-            )}
-          </MainContent>
-        </Container>
+        <>
+          <Container>
+            <SideBar>
+              <SideBarSection
+                className={
+                  openedTab === null || openedTab === "dashboard"
+                    ? "selected"
+                    : ""
+                }
+                onClick={() => setOpnedTab(null)}
+              >
+                <GoDashboard />
+                <span>Dashboard</span>
+              </SideBarSection>
+              <SideBarSection
+                className={openedTab === "propertyList" ? "selected" : ""}
+                onClick={() => setOpnedTab("propertyList")}
+              >
+                <FaListUl />
+                <span>Property List</span>
+              </SideBarSection>
+              <SideBarSection
+                className={openedTab === "propertyGrid" ? "selected" : ""}
+                onClick={() => setOpnedTab("propertyGrid")}
+              >
+                <BsGrid />
+                <span>Property Grid</span>
+              </SideBarSection>
+            </SideBar>
+            <MainContent>
+              {openedTab === "propertyList" && (
+                <HomeList
+                  homesList={homesList}
+                  setSelectedHome={setSelectedHome}
+                />
+              )}
+              {openedTab === "propertyGrid" && (
+                <HomeGrid
+                  homesList={homesList}
+                  setSelectedHome={setSelectedHome}
+                />
+              )}
+            </MainContent>
+          </Container>
+        </>
       ) : (
         <HomeDetails home={selectedHome} back={() => setSelectedHome(null)} />
       )}

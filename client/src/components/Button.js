@@ -16,7 +16,7 @@ export const Button = styled(Link)`
   justify-content: center;
   align-items: center;
   padding: ${({ big }) => (big ? "16px 40px" : "14px 24px")};
-  color: ${({ theme }) => theme.headingColor};
+  color: ${({ theme }) => theme.primaryText};
   font-size: ${({ big }) => (big ? "20px" : "14px")};
   &:hover {
     transform: translateY(-2px);

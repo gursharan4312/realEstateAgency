@@ -2,19 +2,21 @@ import { useState } from "react";
 import styled, { css } from "styled-components";
 import { useHistory } from "react-router-dom";
 import { IoChevronForward, IoChevronBack } from "react-icons/io5";
-import { BsDot } from "react-icons/bs";
+import { FiEdit } from "react-icons/fi";
+import { AiFillDelete } from "react-icons/ai";
 
 const CardWrapper = styled.div`
   width: 100%;
-  height: 300px;
+  height: fit-content;
   overflow: hidden;
   background: ${({ theme }) => theme.backgroundVariant};
-  margin: 1rem 0;
+  margin: 1rem 0.5rem;
 `;
 const ImagesWrapper = styled.div`
   display: flex;
   width: 100%;
   height: 80%;
+  height: 250px;
   align-items: center;
   justify-content: space-between;
   position: relative;
@@ -34,7 +36,6 @@ const ImagesWrapperInner = styled.div`
     transition: 0.3s all ease-in-out;
     &:hover {
       transform: scale(1.2);
-      /* filter: brightness(0.8); */
     }
   }
 `;
@@ -70,7 +71,7 @@ const CardContent = styled.div`
   span {
     margin: 0.25rem 0;
   }
-  h2 {
+  strong {
     transition: 0.3s;
     &:hover {
       color: ${({ theme }) => theme.primaryColor};
@@ -78,38 +79,78 @@ const CardContent = styled.div`
       cursor: pointer;
     }
   }
+  div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 `;
 
-function ListCard({
-  onClick,
-  _id,
-  images,
-  title,
-  price,
-  type,
-  date,
-  rooms,
-  washrooms,
-  size,
-  pets,
-}) {
+const Icons = styled.span``;
+const IconsCss = css`
+  font-size: 1.3rem;
+  transition: 0.2s all ease-in-out;
+  margin: 0 1rem;
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.2);
+  }
+`;
+const EditIcon = styled(FiEdit)`
+  ${IconsCss}
+`;
+const DeleteIcon = styled(AiFillDelete)`
+  ${IconsCss}
+  color: #ca0b00;
+`;
+
+function ListCard({ setSelectedHome, homeDetails }) {
   let history = useHistory();
   const [selectedImg, setSelectedImg] = useState(0);
+  const {
+    _id,
+    images,
+    title,
+    price,
+    type,
+    date,
+    rooms,
+    washrooms,
+    size,
+    pets,
+  } = homeDetails;
+  console.log(homeDetails);
   const forward = () => setSelectedImg((selectedImg + 1) % images.length);
   const backward = () =>
     setSelectedImg(selectedImg === 0 ? images.length - 1 : selectedImg - 1);
   return (
-    <CardWrapper className="list-card" onClick={onClick}>
+    <CardWrapper className="list-card">
       <ImagesWrapper>
         <BackwardArrow onClick={backward} />
-        <ImagesWrapperInner>
+        <ImagesWrapperInner
+          onClick={() => {
+            setSelectedHome(homeDetails);
+          }}
+        >
           <img src={images[selectedImg]} alt="card" />
         </ImagesWrapperInner>
         <ForwardArrow onClick={forward} />
       </ImagesWrapper>
       <CardContent>
-        <strong onClick={() => history.push(`/homes/${_id}`)}>{title}</strong>
-        <span>${price}</span>
+        <strong
+          onClick={() => {
+            setSelectedHome(homeDetails);
+          }}
+        >
+          {title}
+        </strong>
+        <div>
+          ${price}{" "}
+          <Icons>
+            <EditIcon />
+            <DeleteIcon />
+          </Icons>
+        </div>
       </CardContent>
     </CardWrapper>
   );

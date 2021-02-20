@@ -44,6 +44,19 @@ const ListWrapper = styled.div`
   @media screen and (max-width: 768px) {
     display: none;
   }
+  &::-webkit-scrollbar-thumb {
+    background: #434343;
+    border-radius: 16px;
+    box-shadow: inset 2px 2px 2px hsl(0deg 0% 100% / 25%),
+      inset -2px -2px 2px rgb(0 0 0 / 25%);
+  }
+  &::-webkit-scrollbar-track {
+    background: linear-gradient(90deg, #434343, #434343 1px, #111 0, #111);
+  }
+  &::-webkit-scrollbar {
+    width: 16px;
+    height: 16px;
+  }
 `;
 
 const HomesPage = ({ match, history }) => {

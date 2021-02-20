@@ -5,8 +5,8 @@ import ListCard from "./components/ListCard";
 const Column = styled.div`
   display: flex;
   flex-wrap: wrap;
-  /* justify-content: space-around; */
-  gap: 1rem;
+  justify-content: space-around;
+  align-items: center;
   .list-card {
     width: 25%;
     min-width: 300px;
@@ -14,14 +14,13 @@ const Column = styled.div`
 `;
 
 function HomeGrid({ homesList, setSelectedHome }) {
-  console.log(homesList);
   return (
     <Column>
       {homesList.map((home) => (
         <ListCard
           key={home._id}
-          {...home}
-          onClick={() => setSelectedHome(home)}
+          homeDetails={home}
+          setSelectedHome={setSelectedHome}
         />
       ))}
     </Column>

@@ -1,38 +1,66 @@
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyles = createGlobalStyle`
-       
+       :root{
+         --xsmall-screen:320px;
+         --small-screen:480px;
+         --medium-screen: 768px;
+         --large-screen: 1024px;
+         --xlarge-screen: 1224px;
+       }
     *{
         margin:0;
         padding:0;
         box-sizing:border-box;
         font-family: 'Montserrat', sans-serif;
-        transition: color 0.3s, background 0.3s; 
+        transition: color 0.1s, background 0.3s; 
     }
     html,body{
         overflow-x: hidden;
         background: ${({ theme }) => theme.background};
     }
+    html{
+      &::-webkit-scrollbar-thumb {
+        background: #434343;
+        border-radius: 16px;
+        box-shadow: inset 2px 2px 2px hsl(0deg 0% 100% / 25%), inset -2px -2px 2px rgb(0 0 0 / 25%);
+      }
+      &::-webkit-scrollbar-track {
+        background: linear-gradient(
+        90deg
+        ,#434343,#434343 1px,#111 0,#111);
+      }
+      &::-webkit-scrollbar {
+        width: 16px;
+        height: 16px;
+       }
+    }
 `;
 
 export default GlobalStyles;
 
+//system themes
 export const themes = {
   dark: {
     name: "dark",
     background: "#121212",
     backgroundVariant: "#272727",
+    backgroundVariant2: "#303030",
     primaryColor: "#cd853f",
-    headingColor: "#fff",
-    headingColorInverted: "#000",
+    // headingColor: "#fff",
+    // headingColorInverted: "#000",
     textColor: "#6c737d",
     primaryText: "#fff",
     secondaryText: "#6c737d",
+    intractiveText: "#cd853f",
+    disabledText: "#cfd8dc",
+    error: "#c00400",
   },
   light: {
     name: "light",
     background: "#e1e1e1",
     backgroundVariant: "#c7c7c7",
+    backgroundVariant2: "#c7c7c7",
     primaryColor: "#AC6C2D",
     headingColor: "#000",
     headingColorInverted: "#fff",
@@ -42,6 +70,7 @@ export const themes = {
   },
 };
 
+//google map styles
 export const mapStyles = {
   dark: [
     {

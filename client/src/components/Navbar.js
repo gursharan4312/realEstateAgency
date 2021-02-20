@@ -18,7 +18,7 @@ const Nav = styled.nav`
 `;
 
 const NavLink = css`
-  color: ${({ theme }) => theme.headingColor};
+  color: ${({ theme }) => theme.primaryText};
   display: inline-block;
   align-items: center;
   padding: 0 1rem;
@@ -33,7 +33,7 @@ const Logo = styled(Link)`
 `;
 const MenuBars = styled(FaBars)`
   display: none;
-  color: ${({ theme }) => theme.headingColor};
+  color: ${({ theme }) => theme.primaryText};
   height: 40px;
   width: 40px;
   position: absolute;
