@@ -16,32 +16,36 @@ import Login from "./pages/login";
 import PrivateRoute from "./components/PrivateRoute";
 import axios from "axios";
 import User from "./pages/user";
+import Addhome from "./pages/addhome";
 function App() {
   const state = useContext(StateContext);
   const dispatch = useContext(DispatchContext);
-  useEffect(async () => {
-    const token = localStorage.getItem("userToken");
-    if (token && !state.user.auth) {
-      dispatch({
-        type: USER_LOGIN_REQUEST,
-      });
-      const { status, data } = await axios.get("/api/users/profile", {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      });
-      if (status === 200) {
+  useEffect(() => {
+    async function getUserData() {
+      const token = localStorage.getItem("userToken");
+      if (token && !state.user.auth) {
         dispatch({
-          type: USER_LOGIN_SUCCESS,
-          payload: { ...data, auth: true },
+          type: USER_LOGIN_REQUEST,
         });
-      } else {
-        dispatch({
-          type: USER_LOGIN_FAIL,
+        const { status, data } = await axios.get("/api/users/profile", {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
         });
+        if (status === 200) {
+          dispatch({
+            type: USER_LOGIN_SUCCESS,
+            payload: { ...data, auth: true },
+          });
+        } else {
+          dispatch({
+            type: USER_LOGIN_FAIL,
+          });
+        }
       }
     }
-  }, []);
+    getUserData();
+  }, [dispatch, state.user.auth]);
   return (
     <Switch>
       <Route exact path="/" component={Index} />
@@ -50,7 +54,8 @@ function App() {
       <Route path="/homes/:id" component={Homes} />
       <Route path="/homes" component={Homes} />
       <Route path="/login" component={Login} />
-      <Route path="/user" component={User} />
+      <PrivateRoute path="/addhome" component={Addhome} />
+      <PrivateRoute path="/user" component={User} />
       {/* <Route path="/user/:item" component={User} /> */}
       <PrivateRoute path="/admin" component={Admin} />
       <Route component={NotFound} />

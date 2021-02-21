@@ -1,6 +1,5 @@
 import { useState } from "react";
 import styled, { css } from "styled-components";
-import { useHistory } from "react-router-dom";
 import { IoChevronForward, IoChevronBack } from "react-icons/io5";
 import { FiEdit } from "react-icons/fi";
 import { AiFillDelete } from "react-icons/ai";
@@ -8,7 +7,6 @@ import { AiFillDelete } from "react-icons/ai";
 const CardWrapper = styled.div`
   width: 30%;
   min-width: 300px;
-  /* height: fit-content; */
   overflow: hidden;
   background: ${({ theme }) => theme.backgroundVariant};
   margin: 1rem 0.5rem;
@@ -109,21 +107,8 @@ const DeleteIcon = styled(AiFillDelete)`
 `;
 
 function ListCard({ setSelectedHome, homeDetails }) {
-  let history = useHistory();
   const [selectedImg, setSelectedImg] = useState(0);
-  const {
-    _id,
-    images,
-    title,
-    price,
-    type,
-    date,
-    rooms,
-    washrooms,
-    size,
-    pets,
-  } = homeDetails;
-  console.log(homeDetails);
+  const { images, title, price } = homeDetails;
   const forward = () => setSelectedImg((selectedImg + 1) % images.length);
   const backward = () =>
     setSelectedImg(selectedImg === 0 ? images.length - 1 : selectedImg - 1);

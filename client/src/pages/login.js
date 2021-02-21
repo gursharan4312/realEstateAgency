@@ -7,7 +7,6 @@ import {
   USER_LOGIN_FAIL,
   USER_LOGIN_SUCCESS,
   USER_LOGIN_REQUEST,
-  USER_LOGOUT,
 } from "../context/constants/userConstants";
 import axios from "axios";
 import Loading from "../components/Loading";
@@ -87,7 +86,7 @@ function Login({ history, location }) {
     if (user && user.auth) {
       history.push(fromPath.current);
     }
-  }, [user]);
+  }, [history, user]);
 
   return (
     <Layout hideFooter="true" hideNav="true">

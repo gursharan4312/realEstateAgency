@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import styled, { useTheme } from "styled-components";
-import { DispatchContext, StateContext } from "../context/GlobalContext";
+import { DispatchContext } from "../context/GlobalContext";
 import { FaSun, FaMoon } from "react-icons/fa";
 
 const PreferencesContainer = styled.div`
@@ -84,7 +84,7 @@ const Slider = styled.span`
 `;
 
 function UserPreferences() {
-  const { user } = useContext(StateContext);
+  // const { user } = useContext(StateContext);
   const dispatch = useContext(DispatchContext);
   const theme = useTheme();
   const setTheme = (payload) => {

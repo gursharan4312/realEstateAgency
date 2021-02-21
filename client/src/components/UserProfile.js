@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import styled from "styled-components";
-import { DispatchContext, StateContext } from "../context/GlobalContext";
+import { StateContext } from "../context/GlobalContext";
 
 const ProfileContainer = styled.div`
   display: flex;
@@ -18,7 +18,7 @@ const UserDetails = styled.div`
 
 function UserProfile() {
   const { user } = useContext(StateContext);
-  const dispatch = useContext(DispatchContext);
+  // const dispatch = useContext(DispatchContext);
   return (
     <ProfileContainer>
       <ProfileImg src={user.profileImg} alt={user.name} />

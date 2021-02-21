@@ -3,7 +3,7 @@ import styled, { css } from "styled-components/macro";
 import { Link, useHistory } from "react-router-dom";
 import { menuData } from "../data/MenuData";
 import { Button } from "./Button";
-import { FaBars, FaSun, FaMoon } from "react-icons/fa";
+import { FaBars } from "react-icons/fa";
 import { DispatchContext, StateContext } from "../context/GlobalContext";
 import { USER_LOGOUT } from "../context/constants/userConstants";
 
@@ -68,21 +68,6 @@ const NavBtn = styled.div`
   }
 `;
 
-const DarkThemeBtn = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0.3rem 0.5rem;
-  margin-left: 1rem;
-  font-size: 1.4rem;
-  .sun {
-    color: #fff;
-  }
-  .moon {
-    color: #000;
-  }
-`;
-
 const UserProfile = styled.div`
   width: 40px;
   height: 40px;
@@ -119,56 +104,6 @@ const MenuItem = styled.div`
   margin: 0.25rem 0;
   &:hover {
     background-color: ${({ theme }) => theme.backgroundVariant};
-  }
-`;
-
-const ToggleSwitch = styled.label`
-  position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 34px;
-  margin: 0 0.3rem;
-  input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-    &:checked + .slider {
-      background-color: ${({ theme }) => theme.background};
-    }
-    &:focus + .slider {
-      box-shadow: 0 0 1px ${({ theme }) => theme.backgroundVariant};
-    }
-    &:checked + .slider:before {
-      -webkit-transform: translateX(26px);
-      -ms-transform: translateX(26px);
-      transform: translateX(26px);
-    }
-  }
-`;
-
-const Slider = styled.span`
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: 0.4s;
-  transition: 0.4s;
-  border-radius: 34px;
-  &:before {
-    position: absolute;
-
-    content: "";
-    height: 26px;
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
-    background-color: ${({ theme }) => theme.backgroundVariant};
-    -webkit-transition: 0.4s;
-    transition: 0.4s;
-    border-radius: 50%;
   }
 `;
 
@@ -210,7 +145,7 @@ function Navbar({ toggleDropdown, setTheme, theme, atHome }) {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [dropdownRef]);
+  }, [dropdownRef, showUserOptions]);
 
   return (
     <Nav atTop={atTop} atHome={atHome}>

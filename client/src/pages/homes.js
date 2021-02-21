@@ -67,18 +67,21 @@ const HomesPage = ({ match, history }) => {
   const [openHomeDetails, setOpenHomeDetails] = useState(false);
   const [selectedHome, setSelectedHome] = useState(null);
 
-  useEffect(async () => {
-    if (homesList.length === 0) {
-      dispatch({ type: "HOME_LIST_REQUEST" });
-      try {
-        const { data } = await axios.get("/api/homes");
-        setHomesList([...data]);
-        dispatch({ type: "HOME_LIST_SUCCESS", payload: [...data] });
-      } catch (e) {
-        dispatch({ type: "HOME_LIST_FAIL", payload: "Someting went wrong" });
+  useEffect(() => {
+    async function getHomes() {
+      if (homesList.length === 0) {
+        dispatch({ type: "HOME_LIST_REQUEST" });
+        try {
+          const { data } = await axios.get("/api/homes");
+          setHomesList([...data]);
+          dispatch({ type: "HOME_LIST_SUCCESS", payload: [...data] });
+        } catch (e) {
+          dispatch({ type: "HOME_LIST_FAIL", payload: "Someting went wrong" });
+        }
       }
     }
-  }, [homesList]);
+    getHomes();
+  }, [dispatch, homesList]);
 
   useEffect(() => {
     if (match.params.id) {

@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import { IoChevronForward, IoChevronBack } from "react-icons/io5";
-import styled, { css, useTheme } from "styled-components";
+import styled, { css } from "styled-components";
 import { BsDot } from "react-icons/bs";
 
 const InfoWindowContent = styled.div`
