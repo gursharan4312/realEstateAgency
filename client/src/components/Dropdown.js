@@ -29,7 +29,7 @@ const Icon = styled.div`
   outline: none;
 `;
 const CloseIcon = styled(FaTimes)`
-  color: ${({ theme }) => theme.headingColor};
+  color: ${({ theme }) => theme.primaryText};
   &:hover {
     color: ${({ theme }) => theme.primaryColor};
   }
@@ -48,7 +48,7 @@ const DropdownMenu = styled.div`
 `;
 const Dropdownlink = styled(Link)`
   display: flex;
-  color: ${({ theme }) => theme.headingColor};
+  color: ${({ theme }) => theme.primaryText};
   align-items: center;
   justify-content: center;
   font-size: 1.5rem;

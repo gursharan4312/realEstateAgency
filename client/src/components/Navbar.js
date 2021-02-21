@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
-import styled, { css } from "styled-components";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState, useContext, useRef } from "react";
+import styled, { css } from "styled-components/macro";
+import { Link, useHistory } from "react-router-dom";
 import { menuData } from "../data/MenuData";
 import { Button } from "./Button";
 import { FaBars, FaSun, FaMoon } from "react-icons/fa";
+import { DispatchContext, StateContext } from "../context/GlobalContext";
+import { USER_LOGOUT } from "../context/constants/userConstants";
 
 const Nav = styled.nav`
   height: 60px;
@@ -81,6 +83,45 @@ const DarkThemeBtn = styled.div`
   }
 `;
 
+const UserProfile = styled.div`
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #000;
+  background-image: url(${(props) => props.img});
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin-left: 1rem;
+
+  position: relative;
+  &:hover {
+    cursor: pointer;
+  }
+`;
+const ProfileMenu = styled.div`
+  position: absolute;
+  top: 45px;
+  right: -10px;
+  /* left: -100%; */
+  min-width: 10rem;
+  background-color: ${({ theme }) => theme.backgroundVariant2};
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0.25rem;
+  padding: 0.25rem 0;
+`;
+const MenuItem = styled.div`
+  padding: 0.25rem 1.5rem;
+  line-height: 1.5rem;
+  color: ${({ theme }) => theme.primaryText};
+  font-size: 1rem;
+  margin: 0.25rem 0;
+  &:hover {
+    background-color: ${({ theme }) => theme.backgroundVariant};
+  }
+`;
+
 const ToggleSwitch = styled.label`
   position: relative;
   display: inline-block;
@@ -132,7 +173,17 @@ const Slider = styled.span`
 `;
 
 function Navbar({ toggleDropdown, setTheme, theme, atHome }) {
-  const [atTop, setAtTop] = useState(true);
+  const { user } = useContext(StateContext);
+  const dispatch = useContext(DispatchContext);
+  const history = useHistory();
+  const dropdownRef = useRef(null);
+  const [showUserOptions, setShowUserOptions] = useState(false);
+  const [atTop, setAtTop] = useState(true); //navbar position
+  console.log(user);
+  const logout = () => {
+    dispatch({ type: USER_LOGOUT });
+  };
+
   useEffect(() => {
     let eventListener = window.addEventListener("scroll", (e) => {
       var scrolled = document.scrollingElement.scrollTop;
@@ -146,6 +197,22 @@ function Navbar({ toggleDropdown, setTheme, theme, atHome }) {
     return () => window.removeEventListener("scroll", eventListener);
   }, [atTop]);
 
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (
+        showUserOptions &&
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target)
+      ) {
+        setShowUserOptions(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [dropdownRef]);
+
   return (
     <Nav atTop={atTop} atHome={atHome}>
       <Logo to="/">REST</Logo>
@@ -158,10 +225,40 @@ function Navbar({ toggleDropdown, setTheme, theme, atHome }) {
         ))}
       </NavMenu>
       <NavBtn>
-        <Button primary="true" to="/contact">
+        {/* <Button primary="true" to="/contact">
           Contact Us
-        </Button>
-        <DarkThemeBtn>
+        </Button> */}
+        {user && user.auth ? (
+          <UserProfile
+            onClick={() => setShowUserOptions(!showUserOptions)}
+            img={user.profileImg}
+          >
+            {showUserOptions && (
+              <ProfileMenu ref={dropdownRef}>
+                {user.isAdmin && (
+                  <MenuItem onClick={() => history.push("/admin")}>
+                    Dashboard
+                  </MenuItem>
+                )}
+                <MenuItem>Profile</MenuItem>
+                <MenuItem>Preferences</MenuItem>
+                <MenuItem onClick={logout}>Logout</MenuItem>
+              </ProfileMenu>
+            )}
+          </UserProfile>
+        ) : (
+          <Button
+            css={`
+              margin-left: 1rem;
+            `}
+            primary="true"
+            to="/login"
+          >
+            Login
+          </Button>
+        )}
+
+        {/* <DarkThemeBtn>
           <FaSun className="sun" />
           <ToggleSwitch htmlFor="darkmodetoggler">
             <input
@@ -173,7 +270,7 @@ function Navbar({ toggleDropdown, setTheme, theme, atHome }) {
             <Slider className="slider"></Slider>
           </ToggleSwitch>
           <FaMoon className="moon" />
-        </DarkThemeBtn>
+        </DarkThemeBtn> */}
       </NavBtn>
     </Nav>
   );

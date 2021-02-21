@@ -80,7 +80,6 @@ function Login({ history, location }) {
       localStorage.setItem("userToken", data.token);
     } catch (e) {
       dispatch({ type: USER_LOGIN_FAIL, payload: e });
-      console.log(e);
     }
   };
 
