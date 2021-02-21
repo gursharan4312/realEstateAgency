@@ -1,0 +1,18 @@
+version: "3"
+
+services:
+  proshop:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - 5001:5001
+    environment:
+      JWT_SECRET: ${JWT_SECRET}
+      MONGO_URI: ${MONGO_URI}
+      REACT_APP_GOOGLE_MAP_API: ${REACT_APP_GOOGLE_MAP_API}
+    container_name: realestate
+networks:
+  default:
+    external:
+      name: nmamager_default
