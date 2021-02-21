@@ -15,6 +15,7 @@ import Admin from "./pages/admin";
 import Login from "./pages/login";
 import PrivateRoute from "./components/PrivateRoute";
 import axios from "axios";
+import User from "./pages/user";
 function App() {
   const state = useContext(StateContext);
   const dispatch = useContext(DispatchContext);
@@ -49,6 +50,8 @@ function App() {
       <Route path="/homes/:id" component={Homes} />
       <Route path="/homes" component={Homes} />
       <Route path="/login" component={Login} />
+      <Route path="/user" component={User} />
+      {/* <Route path="/user/:item" component={User} /> */}
       <PrivateRoute path="/admin" component={Admin} />
       <Route component={NotFound} />
     </Switch>

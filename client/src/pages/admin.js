@@ -9,6 +9,7 @@ import HomeDetails from "../components/HomeDetails";
 import { GoDashboard } from "react-icons/go";
 import { FaListUl } from "react-icons/fa";
 import { BsGrid } from "react-icons/bs";
+import SubNavigation, { SubNavItem } from "../components/SubNavigation";
 
 const Container = styled.div`
   height: 100%;
@@ -16,44 +17,6 @@ const Container = styled.div`
   padding-top: 60px;
 `;
 
-const SideBar = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-bottom: 1px solid ${({ theme }) => theme.secondaryText};
-  overflow-x: auto;
-  padding: 0 0.5rem;
-`;
-const SideBarSection = styled.div`
-  padding: 0.5rem 1rem;
-  margin: 1.5rem 1rem 0;
-  border-bottom: 2px solid transparent;
-  color: ${({ theme }) => theme.secondaryText};
-  white-space: nowrap;
-
-  @media screen and (max-width: 480px) {
-    margin: 1.5rem 0 0;
-    padding: 0.5rem;
-  }
-  &:hover {
-    border-color: ${({ theme }) => theme.primaryText};
-    cursor: pointer;
-  }
-  &.selected {
-    border-color: ${({ theme }) => theme.primaryColor};
-    color: ${({ theme }) => theme.primaryText};
-  }
-
-  svg {
-    font-size: 1.2rem;
-    vertical-align: middle;
-    margin-right: 0.3rem;
-  }
-  span {
-    vertical-align: middle;
-  }
-`;
 const MainContent = styled.div`
   flex: 1;
 `;
@@ -81,51 +44,49 @@ function Admin() {
   return (
     <Layout>
       {!selectedHome ? (
-        <>
-          <Container>
-            <SideBar>
-              <SideBarSection
-                className={
-                  openedTab === null || openedTab === "dashboard"
-                    ? "selected"
-                    : ""
-                }
-                onClick={() => setOpnedTab(null)}
-              >
-                <GoDashboard />
-                <span>Dashboard</span>
-              </SideBarSection>
-              <SideBarSection
-                className={openedTab === "propertyList" ? "selected" : ""}
-                onClick={() => setOpnedTab("propertyList")}
-              >
-                <FaListUl />
-                <span>Property List</span>
-              </SideBarSection>
-              <SideBarSection
-                className={openedTab === "propertyGrid" ? "selected" : ""}
-                onClick={() => setOpnedTab("propertyGrid")}
-              >
-                <BsGrid />
-                <span>Property Grid</span>
-              </SideBarSection>
-            </SideBar>
-            <MainContent>
-              {openedTab === "propertyList" && (
-                <HomeList
-                  homesList={homesList}
-                  setSelectedHome={setSelectedHome}
-                />
-              )}
-              {openedTab === "propertyGrid" && (
-                <HomeGrid
-                  homesList={homesList}
-                  setSelectedHome={setSelectedHome}
-                />
-              )}
-            </MainContent>
-          </Container>
-        </>
+        <Container>
+          <SubNavigation>
+            <SubNavItem
+              className={
+                openedTab === null || openedTab === "dashboard"
+                  ? "selected"
+                  : ""
+              }
+              onClick={() => setOpnedTab(null)}
+            >
+              <GoDashboard />
+              <span>Dashboard</span>
+            </SubNavItem>
+            <SubNavItem
+              className={openedTab === "propertyList" ? "selected" : ""}
+              onClick={() => setOpnedTab("propertyList")}
+            >
+              <FaListUl />
+              <span>Property List</span>
+            </SubNavItem>
+            <SubNavItem
+              className={openedTab === "propertyGrid" ? "selected" : ""}
+              onClick={() => setOpnedTab("propertyGrid")}
+            >
+              <BsGrid />
+              <span>Property Grid</span>
+            </SubNavItem>
+          </SubNavigation>
+          <MainContent>
+            {openedTab === "propertyList" && (
+              <HomeList
+                homesList={homesList}
+                setSelectedHome={setSelectedHome}
+              />
+            )}
+            {openedTab === "propertyGrid" && (
+              <HomeGrid
+                homesList={homesList}
+                setSelectedHome={setSelectedHome}
+              />
+            )}
+          </MainContent>
+        </Container>
       ) : (
         <HomeDetails home={selectedHome} back={() => setSelectedHome(null)} />
       )}

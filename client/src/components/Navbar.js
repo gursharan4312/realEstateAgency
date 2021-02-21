@@ -179,7 +179,6 @@ function Navbar({ toggleDropdown, setTheme, theme, atHome }) {
   const dropdownRef = useRef(null);
   const [showUserOptions, setShowUserOptions] = useState(false);
   const [atTop, setAtTop] = useState(true); //navbar position
-  console.log(user);
   const logout = () => {
     dispatch({ type: USER_LOGOUT });
   };
@@ -240,8 +239,12 @@ function Navbar({ toggleDropdown, setTheme, theme, atHome }) {
                     Dashboard
                   </MenuItem>
                 )}
-                <MenuItem>Profile</MenuItem>
-                <MenuItem>Preferences</MenuItem>
+                <MenuItem onClick={() => history.push("/user")}>
+                  Profile
+                </MenuItem>
+                <MenuItem onClick={() => history.push("/user")}>
+                  Preferences
+                </MenuItem>
                 <MenuItem onClick={logout}>Logout</MenuItem>
               </ProfileMenu>
             )}
