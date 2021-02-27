@@ -54,10 +54,10 @@ function App() {
       <Route path="/homes/:id" component={Homes} />
       <Route path="/homes" component={Homes} />
       <Route path="/login" component={Login} />
-      <PrivateRoute path="/addhome" component={Addhome} />
       <PrivateRoute path="/user" component={User} />
       {/* <Route path="/user/:item" component={User} /> */}
-      <PrivateRoute path="/admin" component={Admin} />
+      <PrivateRoute path="/admin" admin component={Admin} />
+      <PrivateRoute path="/addhome" admin component={Addhome} />
       <Route component={NotFound} />
     </Switch>
   );

@@ -1,7 +1,5 @@
-import { useState } from "react";
-import styled, { css } from "styled-components";
-import AutoCompleteAddress from "../components/AutoCompleteAddress";
-import Layout from "../components/Layout";
+import React from "react";
+import styled from "styled-components";
 
 const Container = styled.div`
   margin-top: 60px;
@@ -61,22 +59,16 @@ const Button = styled.button`
   }
 `;
 
-function Addhome() {
-  const [address, setAddress] = useState({
-    adress: "",
-    position: { lat: "", lng: "" },
-  });
+function HomeEdit() {
   return (
-    <Layout>
-      <Container>
-        <FormContainer>
-          <h1>Add new Home Details</h1>
-          <AutoCompleteAddress setAddress={setAddress} />
-          <Input placeholder="Property type" />
-        </FormContainer>
-      </Container>
-    </Layout>
+    <Container>
+      <FormContainer>
+        <Input placeholder="Your Name" />
+
+        <Input placeholder="Your Email" />
+      </FormContainer>
+    </Container>
   );
 }
 
-export default Addhome;
+export default HomeEdit;
