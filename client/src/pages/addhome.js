@@ -66,6 +66,14 @@ function Addhome() {
     adress: "",
     position: { lat: "", lng: "" },
   });
+  const [images, setImages] = useState([]);
+  const [title, setTitle] = useState("");
+  const [price, setPrice] = useState("");
+  const [type, setType] = useState("");
+  const [rooms, setRooms] = useState("");
+  const [washrooms, setWashrooms] = useState("");
+  const [size, setSize] = useState("");
+  const [details, setDetails] = useState("");
   return (
     <Layout>
       <Container>

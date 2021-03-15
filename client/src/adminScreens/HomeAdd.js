@@ -59,16 +59,15 @@ const Button = styled.button`
   }
 `;
 
-function HomeEdit() {
+function HomeAdd() {
   return (
     <Container>
       <FormContainer>
         <Input placeholder="Your Name" />
-
         <Input placeholder="Your Email" />
       </FormContainer>
     </Container>
   );
 }
 
-export default HomeEdit;
+export default HomeAdd;
