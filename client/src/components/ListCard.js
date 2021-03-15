@@ -97,6 +97,9 @@ function ListCard({
   const forward = () => setSelectedImg((selectedImg + 1) % images.length);
   const backward = () =>
     setSelectedImg(selectedImg === 0 ? images.length - 1 : selectedImg - 1);
+
+  if (typeof images === "undefined") return <>undefiind</>;
+
   return (
     <CardWrapper className="list-card">
       <ImagesWrapper>
