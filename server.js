@@ -14,6 +14,9 @@ connectDb();
 app.use(express.json());
 app.use(morgan("dev"));
 
+app.use("/api/homes", homesRoutes);
+app.use("/api/users", userRoutes);
+
 const __dirname = path.resolve();
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
 
@@ -28,13 +31,6 @@ if (process.env.NODE_ENV === "production") {
     res.send("API is running");
   });
 }
-
-app.get("/", (req, res) => {
-  res.send("API is running");
-});
-
-app.use("/api/homes", homesRoutes);
-app.use("/api/users", userRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
