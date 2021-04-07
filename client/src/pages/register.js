@@ -1,13 +1,12 @@
 import { useState, useContext, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
 import Layout from "../components/Layout";
 import styled from "styled-components";
 import { Button } from "../components/Button";
 import { StateContext, DispatchContext } from "../context/GlobalContext";
 import {
-  USER_LOGIN_FAIL,
-  USER_LOGIN_SUCCESS,
-  USER_LOGIN_REQUEST,
+  USER_REGSITER_FAIL,
+  USER_REGSITER_SUCCESS,
+  USER_REGSITER_REQUEST,
 } from "../context/constants/userConstants";
 import axios from "axios";
 import Loading from "../components/Loading";
@@ -15,6 +14,10 @@ import Loading from "../components/Loading";
 const FormContainer = styled.div`
   margin-top: 60px;
   padding: 2rem calc((100vw - 1300px) / 2);
+`;
+const Alert = styled.div`
+  color: red;
+  margin-top: 1rem;
 `;
 const Form = styled.form`
   width: 40%;
@@ -30,13 +33,6 @@ const Form = styled.form`
   }
   @media screen and (max-width: 48px) {
     width: 100%;
-  }
-  a {
-    text-decoration: none;
-    color: ${({ theme }) => theme.primaryText};
-    &:hover {
-      text-decoration: underline;
-    }
   }
 `;
 const InputGroup = styled.label`
@@ -74,21 +70,39 @@ function Login({ history, location }) {
   const dispatch = useContext(DispatchContext);
   const fromPath = useRef(location.state ? location.state.from.pathname : "/");
 
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
 
   const handleSubmit = async () => {
-    dispatch({ type: USER_LOGIN_REQUEST });
+    if (!name) {
+      setError("Enter valid name");
+      return;
+    } else if (!email) {
+      setError("Enter valid email");
+      return;
+    } else if (password !== confirmPassword) {
+      setError("Passwords donot match");
+      return;
+    }
+    dispatch({ type: USER_REGSITER_REQUEST });
     try {
-      const { data } = await axios.post("/api/users/login", {
+      const { data } = await axios.post("/api/users", {
+        name,
         email,
         password,
       });
-      dispatch({ type: USER_LOGIN_SUCCESS, payload: { ...data, auth: true } });
+      dispatch({
+        type: USER_REGSITER_SUCCESS,
+        payload: { ...data, auth: true },
+      });
       //adding token to localstorage
       localStorage.setItem("userToken", data.token);
     } catch (e) {
-      dispatch({ type: USER_LOGIN_FAIL, payload: e });
+      dispatch({ type: USER_REGSITER_FAIL, payload: e.response.data.message });
+      setError(e.response.data.message);
     }
   };
 
@@ -105,7 +119,16 @@ function Login({ history, location }) {
       ) : (
         <FormContainer>
           <Form>
-            <h2>Login</h2>
+            <h2>Register</h2>
+            {error && <Alert>{error}</Alert>}
+            <InputGroup>
+              Name:
+              <Input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </InputGroup>
             <InputGroup>
               Email:
               <Input
@@ -122,15 +145,18 @@ function Login({ history, location }) {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </InputGroup>
+            <InputGroup>
+              Confirm Password:
+              <Input
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
+            </InputGroup>
             <ButtonContainer>
-              <Button onClick={handleSubmit}>Login</Button>
+              <Button onClick={handleSubmit}>Register</Button>
               <Button onClick={history.goBack}>Cancel</Button>
             </ButtonContainer>
-            <div style={{ textAlign: "center", paddingTop: "1rem" }}>
-              <span>
-                forgot password or <Link to="/register">register</Link>
-              </span>
-            </div>
           </Form>
         </FormContainer>
       )}

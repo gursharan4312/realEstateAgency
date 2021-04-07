@@ -13,10 +13,12 @@ export const userReducer = (state, action) => {
       return { loading: true };
     case USER_LOGIN_SUCCESS:
       return { loading: false, ...action.payload };
-    case USER_LOGIN_FAIL:
+    case USER_LOGIN_FAIL: {
+      localStorage.removeItem("userToken");
       return { loading: false, error: action.payload };
+    }
     case USER_LOGOUT: {
-      localStorage.setItem("userToken", "");
+      localStorage.removeItem("userToken");
       return { loading: false };
     }
     default:

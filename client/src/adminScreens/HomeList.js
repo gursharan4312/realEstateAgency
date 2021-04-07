@@ -73,10 +73,12 @@ const Homes = styled.table`
   }
 `;
 const HomeListHeader = styled.thead`
-  display: flex;
-  margin-top: 1rem;
-  text-transform: capitalize;
-  width: 100%;
+  tr {
+    display: flex;
+    margin-top: 1rem;
+    text-transform: capitalize;
+    width: 100%;
+  }
 
   td {
     border: 1px solid ${({ theme }) => theme.primaryText};
@@ -123,13 +125,15 @@ function HomeList({ homesList, setSelectedHome }) {
     <Container>
       <Homes>
         <HomeListHeader>
-          <td className="address-col">Address</td>
-          <td>Price</td>
-          <td>Type</td>
-          <td>rooms</td>
-          <td>washrooms</td>
-          <td>size</td>
-          <td>Actions</td>
+          <tr>
+            <td className="address-col">Address</td>
+            <td>Price</td>
+            <td>Type</td>
+            <td>rooms</td>
+            <td>washrooms</td>
+            <td>size</td>
+            <td>Actions</td>
+          </tr>
         </HomeListHeader>
         <tbody>
           {homesList.map((home) => (
