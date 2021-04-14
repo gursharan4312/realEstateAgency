@@ -9,7 +9,7 @@ import { protect, admin } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-router.route("/").get(getAllHomes).post(protect, admin, addNewHome);
+router.route("/").get(getAllHomes).post(protect, addNewHome);
 router
   .route("/:id")
   .delete(protect, admin, deleteHome)

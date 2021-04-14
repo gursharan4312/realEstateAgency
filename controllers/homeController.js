@@ -11,16 +11,17 @@ const getAllHomes = asyncHandler(async (req, res) => {
 
 //@desc   Create new home
 //@route  POST /api/homes
-//@access Public
+//@access Private
 const addNewHome = asyncHandler(async (req, res) => {
   let {
-    title,
     address,
-    name,
+    city,
+    state,
+    postalCode,
+    country,
     images,
     price,
     type,
-    date,
     rooms,
     washrooms,
     pets,
@@ -29,19 +30,24 @@ const addNewHome = asyncHandler(async (req, res) => {
     details,
   } = req.body;
   const home = new Home({
-    title,
-    address,
-    name,
+    address: {
+      address,
+      city,
+      state,
+      postalCode,
+      country,
+      position,
+    },
     images,
     price,
     type,
-    date,
+    date: new Date(),
     rooms,
     washrooms,
     pets,
     size,
-    position,
     details,
+    posted_by: req.user._id,
   });
   const createdHome = await home.save();
   res.status(201).json(createdHome);
@@ -52,13 +58,14 @@ const addNewHome = asyncHandler(async (req, res) => {
 // @access  Private/Admin
 const updateHome = asyncHandler(async (req, res) => {
   const {
-    title,
     address,
-    name,
+    city,
+    state,
+    postalCode,
+    country,
     images,
     price,
     type,
-    date,
     rooms,
     washrooms,
     pets,
@@ -69,22 +76,28 @@ const updateHome = asyncHandler(async (req, res) => {
   const home = await Home.findById(req.params.id);
 
   if (home) {
-    home.title = title;
-    home.address = address;
-    home.name = name;
-    home.images = images;
-    home.price = price;
-    home.type = type;
-    home.date = date;
-    home.rooms = rooms;
-    home.washrooms = washrooms;
-    home.pets = pets;
-    home.size = size;
-    home.position = position;
-    home.details = details;
+    if (home.posted_by.equals(req.user._id)) {
+      home.address.address = address;
+      home.address.city = city;
+      home.address.state = state;
+      home.address.postalCode = postalCode;
+      home.address.country = country;
+      home.address.position = position;
+      home.images = images;
+      home.price = price;
+      home.type = type;
+      home.date = date;
+      home.rooms = rooms;
+      home.washrooms = washrooms;
+      home.pets = pets;
+      home.size = size;
+      home.details = details;
 
-    const updatedHome = await Home.save();
-    res.status(201).json(updatedHome);
+      const updatedHome = await Home.save();
+      res.status(201).json(updatedHome);
+    } else {
+      throw new Error("User Verification Failed");
+    }
   } else {
     res.status(404);
     throw new Error("Home Not Found");
@@ -97,8 +110,12 @@ const updateHome = asyncHandler(async (req, res) => {
 const deleteHome = asyncHandler(async (req, res) => {
   const home = await Home.findById(req.params.id);
   if (home) {
-    await home.remove();
-    res.json({ message: "Home removed" });
+    if (home.posted_by.equals(req.user._id)) {
+      await home.remove();
+      res.json({ message: "Home removed" });
+    }else{
+      throw new Error("User Verification Failed");
+    }
   } else {
     res.status(404);
     throw new Error("Home not found");

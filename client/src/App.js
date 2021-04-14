@@ -61,8 +61,8 @@ function App() {
       <Route path="/register" component={Register} />
       <PrivateRoute path="/user" component={User} />
       {/* <Route path="/user/:item" component={User} /> */}
-      <PrivateRoute path="/admin" admin component={Admin} />
-      <PrivateRoute path="/addhome" admin component={Addhome} />
+      <PrivateRoute path="/admin" component={Admin} />
+      <PrivateRoute path="/addhome" component={Addhome} />
       <Route component={NotFound} />
     </Switch>
   );
