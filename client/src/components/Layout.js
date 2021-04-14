@@ -41,7 +41,7 @@ function Layout({ atHome, children, hideFooter, hideNav }) {
       </Helmet>
       <GlobalStyles />
       <LayoutContainer>
-        {!hideNav && (
+        {hideNav !== "true" && (
           <Navbar
             toggleDropdown={toggleDropdown}
             setTheme={setTheme}

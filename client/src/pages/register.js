@@ -77,6 +77,7 @@ function Login({ history, location }) {
   const [error, setError] = useState("");
 
   const handleSubmit = async () => {
+    //form validation
     if (!name) {
       setError("Enter valid name");
       return;
@@ -87,6 +88,7 @@ function Login({ history, location }) {
       setError("Passwords donot match");
       return;
     }
+    //user registration
     dispatch({ type: USER_REGSITER_REQUEST });
     try {
       const { data } = await axios.post("/api/users", {
@@ -96,13 +98,16 @@ function Login({ history, location }) {
       });
       dispatch({
         type: USER_REGSITER_SUCCESS,
-        payload: { ...data, auth: true },
+        payload: {},
       });
-      //adding token to localstorage
-      localStorage.setItem("userToken", data.token);
+      history.push({
+        pathname: "/login",
+        state: { message: "Registration successful, please login to continue" },
+      });
     } catch (e) {
-      dispatch({ type: USER_REGSITER_FAIL, payload: e.response.data.message });
-      setError(e.response.data.message);
+      alert("catch");
+      dispatch({ type: USER_REGSITER_FAIL, payload: e.response });
+      setError(e.response?.data?.message);
     }
   };
 
@@ -113,7 +118,7 @@ function Login({ history, location }) {
   }, [history, user]);
 
   return (
-    <Layout hideFooter="true" hideNav="true">
+    <Layout hideFooter="true" hideNav="false">
       {user.loading ? (
         <Loading />
       ) : (
@@ -154,8 +159,12 @@ function Login({ history, location }) {
               />
             </InputGroup>
             <ButtonContainer>
-              <Button onClick={handleSubmit}>Register</Button>
-              <Button onClick={history.goBack}>Cancel</Button>
+              <Button onClick={handleSubmit} to="#">
+                Register
+              </Button>
+              <Button to="#" onClick={history.goBack}>
+                Cancel
+              </Button>
             </ButtonContainer>
           </Form>
         </FormContainer>

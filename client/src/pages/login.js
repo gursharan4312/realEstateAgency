@@ -67,12 +67,16 @@ const ButtonContainer = styled.div`
   justify-content: center;
   gap: 1rem;
 `;
+const Alert = styled.div`
+  color: red;
+  margin-top: 1rem;
+`;
 
 function Login({ history, location }) {
   const state = useContext(StateContext);
   const { user } = state;
   const dispatch = useContext(DispatchContext);
-  const fromPath = useRef(location.state ? location.state.from.pathname : "/");
+  const fromPath = useRef(location.state?.from ? location.state.from : "/");
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -99,13 +103,16 @@ function Login({ history, location }) {
   }, [history, user]);
 
   return (
-    <Layout hideFooter="true" hideNav="true">
+    <Layout hideFooter="true" hideNav="false">
       {user.loading ? (
         <Loading />
       ) : (
         <FormContainer>
           <Form>
             <h2>Login</h2>
+            {location.state?.message && (
+              <Alert>{location.state?.message}</Alert>
+            )}
             <InputGroup>
               Email:
               <Input
