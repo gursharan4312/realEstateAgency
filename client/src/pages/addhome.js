@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 import AutoCompleteAddress from "../components/AutoCompleteAddress";
 import Layout from "../components/Layout";
+import axios from "axios";
+import Loading from "../components/Loading";
 
 const Container = styled.div`
   margin-top: 60px;
@@ -67,20 +69,131 @@ function Addhome() {
     position: { lat: "", lng: "" },
   });
   const [images, setImages] = useState([]);
-  const [title, setTitle] = useState("");
+  const [files, setFiles] = useState({});
+  const [loading, setLoading] = useState(false);
   const [price, setPrice] = useState("");
   const [type, setType] = useState("");
   const [rooms, setRooms] = useState("");
   const [washrooms, setWashrooms] = useState("");
   const [size, setSize] = useState("");
   const [details, setDetails] = useState("");
+  useEffect(() => {
+    console.log(address);
+  }, [address]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // dispatch({ type: USER_LOGIN_REQUEST });
+    uploadFileHandler();
+    setLoading(true);
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.userToken}`,
+        },
+      };
+      const { data } = await axios.post(
+        "/api/homes",
+        {
+          address: address.address,
+          city: address.city,
+          state: address.state,
+          postalCode: address.postalCode,
+          country: address.country,
+          position: address.position,
+          images,
+          price,
+          type,
+          rooms,
+          washrooms,
+          size,
+          details,
+        },
+        config
+      );
+      //resetting form
+      setAddress({
+        adress: "",
+        position: { lat: "", lng: "" },
+      });
+      setImages([]);
+      setFiles({});
+      setPrice("");
+      setType("");
+      setRooms("");
+      setWashrooms("");
+      setSize("");
+      setDetails("");
+    } catch (e) {
+      // dispatch({ type: USER_LOGIN_FAIL, payload: e });
+    }
+    setLoading(false);
+  };
+
+  const uploadFileHandler = async (e) => {
+    const formData = new FormData();
+    for (const [key, value] of Object.entries(files)) {
+      formData.append("image", value);
+    }
+    setLoading(true);
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${localStorage.userToken}`,
+        },
+      };
+      const { data } = await axios.post("/api/upload", formData, config);
+      setImages(data);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+    }
+  };
   return (
     <Layout>
+      {loading && <Loading />}
       <Container>
         <FormContainer>
           <h1>Add new Home Details</h1>
           <AutoCompleteAddress setAddress={setAddress} />
-          <Input placeholder="Property type" />
+          <Input
+            placeholder="Property type"
+            value={type}
+            onChange={(e) => setType(e.target.value)}
+          />
+          <Input
+            placeholder="Price"
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+          />
+          <Input
+            placeholder="Number of rooms"
+            value={rooms}
+            onChange={(e) => setRooms(e.target.value)}
+          />
+          <Input
+            placeholder="Number of Washrooms"
+            value={washrooms}
+            onChange={(e) => setWashrooms(e.target.value)}
+          />
+          <Input
+            placeholder="Size of the Property (FT²)"
+            value={size}
+            onChange={(e) => setSize(e.target.value)}
+          />
+          <TextArea
+            placeholder="Any other important details"
+            value={details}
+            onChange={(e) => setDetails(e.target.value)}
+          />
+          <Input
+            type="file"
+            multiple
+            onChange={(e) => setFiles(e.target.files)}
+          />
+          <Button onClick={handleSubmit}>Submit</Button>
         </FormContainer>
       </Container>
     </Layout>

@@ -7,6 +7,7 @@ import connectDb from "./config/db.js";
 import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
 import homesRoutes from "./routes/homeRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+import uploadRoutes from "./routes/uploadRoutes.js";
 const app = express();
 dotenv.config();
 connectDb();
@@ -16,6 +17,7 @@ app.use(morgan("dev"));
 
 app.use("/api/homes", homesRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/upload", uploadRoutes);
 
 const __dirname = path.resolve();
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));

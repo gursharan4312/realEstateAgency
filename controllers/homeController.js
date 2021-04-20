@@ -24,33 +24,35 @@ const addNewHome = asyncHandler(async (req, res) => {
     type,
     rooms,
     washrooms,
-    pets,
     size,
     position,
     details,
   } = req.body;
+  console.log(address);
   const home = new Home({
-    address: {
-      address,
-      city,
-      state,
-      postalCode,
-      country,
-      position,
-    },
+    address,
+    city,
+    state,
+    postalCode,
+    country,
+    position,
     images,
     price,
     type,
     date: new Date(),
     rooms,
     washrooms,
-    pets,
     size,
     details,
     posted_by: req.user._id,
   });
-  const createdHome = await home.save();
-  res.status(201).json(createdHome);
+  console.log(home);
+  try {
+    const createdHome = await home.save();
+    res.status(201).json(createdHome);
+  } catch (e) {
+    throw new Error("somethig went wrong");
+  }
 });
 
 // @desc    Update a home
@@ -68,7 +70,6 @@ const updateHome = asyncHandler(async (req, res) => {
     type,
     rooms,
     washrooms,
-    pets,
     size,
     position,
     details,
@@ -89,9 +90,9 @@ const updateHome = asyncHandler(async (req, res) => {
       home.date = date;
       home.rooms = rooms;
       home.washrooms = washrooms;
-      home.pets = pets;
       home.size = size;
       home.details = details;
+      // home.posted_by = req.user._id;
 
       const updatedHome = await Home.save();
       res.status(201).json(updatedHome);
@@ -113,7 +114,7 @@ const deleteHome = asyncHandler(async (req, res) => {
     if (home.posted_by.equals(req.user._id)) {
       await home.remove();
       res.json({ message: "Home removed" });
-    }else{
+    } else {
       throw new Error("User Verification Failed");
     }
   } else {

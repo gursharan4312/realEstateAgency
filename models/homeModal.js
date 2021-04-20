@@ -24,16 +24,14 @@ import mongoose from "mongoose";
 // );
 const homeSchema = mongoose.Schema(
   {
-    address: {
-      address: { type: String, required: true },
-      city: { type: String, required: true },
-      state: { type: String, required: true },
-      postalCode: { type: String, required: true },
-      country: { type: String, required: true },
-      position: {
-        lat: Number,
-        lng: Number,
-      },
+    address: { type: String, required: true },
+    city: { type: String, required: true },
+    state: { type: String, required: true },
+    postalCode: { type: String, required: true },
+    country: { type: String, required: true },
+    position: {
+      lat: Number,
+      lng: Number,
     },
     images: [String],
     price: { type: Number, required: true },
@@ -41,7 +39,6 @@ const homeSchema = mongoose.Schema(
     date: Date,
     rooms: { type: Number, required: true },
     washrooms: { type: Number, required: true },
-    pets: Boolean,
     size: { type: Number, required: true },
     details: String,
     posted_by: {

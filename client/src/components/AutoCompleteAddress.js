@@ -91,8 +91,26 @@ function AutoCompleteAddress({ setAddress: setMainAddress }) {
       const results = await geocodeByAddress(address);
       var position = await getLatLng(results[0]);
       setAddress(address);
+      console.log(results);
+      let { address_components } = results[0];
+      let city = address_components.filter((comp) =>
+        comp.types.includes("locality")
+      )[0];
+      let state = address_components.filter((comp) =>
+        comp.types.includes("administrative_area_level_1")
+      )[0];
+      let country = address_components.filter((comp) =>
+        comp.types.includes("country")
+      )[0];
+      let postalCode = address_components.filter((comp) =>
+        comp.types.includes("postal_code")
+      )[0];
       setMainAddress({
-        address,
+        address: address.split(",")[0],
+        city: city.short_name,
+        state: state.short_name,
+        postalCode: postalCode.short_name,
+        country: country.short_name,
         position,
       });
     } catch (e) {
