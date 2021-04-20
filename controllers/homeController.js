@@ -28,30 +28,43 @@ const addNewHome = asyncHandler(async (req, res) => {
     position,
     details,
   } = req.body;
-  console.log(address);
-  const home = new Home({
+  var sameHome = await Home.find({
     address,
     city,
     state,
     postalCode,
-    country,
     position,
-    images,
-    price,
-    type,
-    date: new Date(),
-    rooms,
-    washrooms,
-    size,
-    details,
-    posted_by: req.user._id,
   });
-  console.log(home);
-  try {
-    const createdHome = await home.save();
-    res.status(201).json(createdHome);
-  } catch (e) {
-    throw new Error("somethig went wrong");
+  if (sameHome.length > 0) {
+    throw new Error(
+      "Same address property already added please check address and try again"
+    );
+  } else {
+    const home = new Home({
+      address,
+      city,
+      state,
+      postalCode,
+      country,
+      position,
+      images,
+      price,
+      type,
+      date: new Date(),
+      rooms,
+      washrooms,
+      size,
+      details,
+      posted_by: req.user._id,
+    });
+    try {
+      const createdHome = await home.save();
+      res.status(201).json(createdHome);
+    } catch (e) {
+      throw new Error(
+        "Something went wrong please check all inputs and try again"
+      );
+    }
   }
 });
 

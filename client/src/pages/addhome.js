@@ -63,9 +63,23 @@ const Button = styled.button`
   }
 `;
 
+const Error = styled.div`
+  ${inputCss}
+  color: red;
+  border-color: red;
+  margin-bottom: 1rem;
+`;
+
+const Message = styled.div`
+  ${inputCss}
+  color: green;
+  border-color: green;
+  margin-bottom: 1rem;
+`;
+
 function Addhome() {
   const [address, setAddress] = useState({
-    adress: "",
+    address: "",
     position: { lat: "", lng: "" },
   });
   const [images, setImages] = useState([]);
@@ -77,13 +91,16 @@ function Addhome() {
   const [washrooms, setWashrooms] = useState("");
   const [size, setSize] = useState("");
   const [details, setDetails] = useState("");
-  useEffect(() => {
-    console.log(address);
-  }, [address]);
+
+  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // dispatch({ type: USER_LOGIN_REQUEST });
+    if (!validateForm()) {
+      setError("Please fill all inputs with * and try again");
+      return;
+    }
     uploadFileHandler();
     setLoading(true);
     try {
@@ -112,9 +129,11 @@ function Addhome() {
         },
         config
       );
+      setMessage("Property added!");
+      setError("");
       //resetting form
       setAddress({
-        adress: "",
+        address: "",
         position: { lat: "", lng: "" },
       });
       setImages([]);
@@ -127,6 +146,12 @@ function Addhome() {
       setDetails("");
     } catch (e) {
       // dispatch({ type: USER_LOGIN_FAIL, payload: e });
+      setError(
+        e.response.data.message
+          ? e.response.data.message
+          : "Something went wrong please check all inputs and try again"
+      );
+      console.log(e.response.data.message);
     }
     setLoading(false);
   };
@@ -151,22 +176,31 @@ function Addhome() {
       setLoading(false);
     }
   };
+
+  const validateForm = () => {
+    if (!address.address || !files || !price || !type || !details) return false;
+    return true;
+  };
   return (
     <Layout>
       {loading && <Loading />}
       <Container>
         <FormContainer>
           <h1>Add new Home Details</h1>
+          {error && <Error>{error}</Error>}
+          {message && <Message>{message}</Message>}
           <AutoCompleteAddress setAddress={setAddress} />
           <Input
-            placeholder="Property type"
+            placeholder="*Property type"
             value={type}
             onChange={(e) => setType(e.target.value)}
+            required
           />
           <Input
-            placeholder="Price"
+            placeholder="*Price"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
+            required
           />
           <Input
             placeholder="Number of rooms"
@@ -184,9 +218,10 @@ function Addhome() {
             onChange={(e) => setSize(e.target.value)}
           />
           <TextArea
-            placeholder="Any other important details"
+            placeholder="*Property details"
             value={details}
             onChange={(e) => setDetails(e.target.value)}
+            required
           />
           <Input
             type="file"

@@ -91,7 +91,6 @@ function AutoCompleteAddress({ setAddress: setMainAddress }) {
       const results = await geocodeByAddress(address);
       var position = await getLatLng(results[0]);
       setAddress(address);
-      console.log(results);
       let { address_components } = results[0];
       let city = address_components.filter((comp) =>
         comp.types.includes("locality")
@@ -131,7 +130,7 @@ function AutoCompleteAddress({ setAddress: setMainAddress }) {
           <InputDiv>
             <Input
               {...getInputProps({
-                placeholder: "Property Address...",
+                placeholder: "*Property Address...",
                 className: "location-search-input",
               })}
             />
