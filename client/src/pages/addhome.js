@@ -189,7 +189,7 @@ function Addhome() {
       {loading && <Loading />}
       <Container>
         <FormContainer>
-          <h1>Add new Home Details</h1>
+          <h1>Add new Property</h1>
           {error && <Error>{error}</Error>}
           {message && <Message>{message}</Message>}
           <AutoCompleteAddress setAddress={setAddress} />

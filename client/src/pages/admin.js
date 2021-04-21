@@ -76,6 +76,9 @@ function Admin() {
             </SubNavItem>
           </SubNavigation>
           <MainContent>
+            {(openedTab === "dashboard" || openedTab === null) && (
+              <div style={{ textAlign: "center" }}>In Development</div>
+            )}
             {openedTab === "propertyList" && (
               <HomeList
                 homesList={homesList}

@@ -159,9 +159,9 @@ function Navbar({ toggleDropdown, setTheme, theme, atHome }) {
         ))}
       </NavMenu>
       <NavBtn>
-        {/* <Button primary="true" to="/contact">
-          Contact Us
-        </Button> */}
+        <Button primary="true" to="/addhome">
+          Add new Property
+        </Button>
         {user && user.auth ? (
           <UserProfile
             onClick={() => setShowUserOptions(!showUserOptions)}
@@ -169,11 +169,14 @@ function Navbar({ toggleDropdown, setTheme, theme, atHome }) {
           >
             {showUserOptions && (
               <ProfileMenu ref={dropdownRef}>
-                {user.isAdmin && (
+                {/* {user.isAdmin && (
                   <MenuItem onClick={() => history.push("/admin")}>
                     Dashboard
                   </MenuItem>
-                )}
+                )} */}
+                <MenuItem onClick={() => history.push("/admin")}>
+                  Dashboard
+                </MenuItem>
                 <MenuItem onClick={() => history.push("/user")}>
                   Profile
                 </MenuItem>
