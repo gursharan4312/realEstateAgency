@@ -138,9 +138,12 @@ function AutoCompleteAddress({ setAddress: setMainAddress }) {
               border={suggestions.length > 0 ? "1px solid #ced4da" : "none"}
             >
               {loading && <AutoCompleteItem>Loading...</AutoCompleteItem>}
-              {suggestions.map((suggestion) => {
+              {suggestions.map((suggestion, i) => {
                 return (
-                  <AutoCompleteItem {...getSuggestionItemProps(suggestion)}>
+                  <AutoCompleteItem
+                    key={i}
+                    {...getSuggestionItemProps(suggestion)}
+                  >
                     <span>{suggestion.description}</span>
                   </AutoCompleteItem>
                 );

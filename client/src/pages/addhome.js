@@ -82,8 +82,8 @@ function Addhome() {
     address: "",
     position: { lat: "", lng: "" },
   });
-  const [images, setImages] = useState([]);
-  const [files, setFiles] = useState({});
+  // const [images, setImages] = useState([]);
+  const [files, setFiles] = useState("");
   const [loading, setLoading] = useState(false);
   const [price, setPrice] = useState("");
   const [type, setType] = useState("");
@@ -101,7 +101,8 @@ function Addhome() {
       setError("Please fill all inputs with * and try again");
       return;
     }
-    uploadFileHandler();
+    var imgArrary = await uploadFileHandler();
+    console.log(imgArrary);
     setLoading(true);
     try {
       const config = {
@@ -110,7 +111,7 @@ function Addhome() {
           Authorization: `Bearer ${localStorage.userToken}`,
         },
       };
-      const { data } = await axios.post(
+      await axios.post(
         "/api/homes",
         {
           address: address.address,
@@ -119,7 +120,7 @@ function Addhome() {
           postalCode: address.postalCode,
           country: address.country,
           position: address.position,
-          images,
+          images: imgArrary,
           price,
           type,
           rooms,
@@ -136,8 +137,8 @@ function Addhome() {
         address: "",
         position: { lat: "", lng: "" },
       });
-      setImages([]);
-      setFiles({});
+      // setImages([]);
+      setFiles("");
       setPrice("");
       setType("");
       setRooms("");
@@ -151,7 +152,6 @@ function Addhome() {
           ? e.response.data.message
           : "Something went wrong please check all inputs and try again"
       );
-      console.log(e.response.data.message);
     }
     setLoading(false);
   };
@@ -170,10 +170,12 @@ function Addhome() {
         },
       };
       const { data } = await axios.post("/api/upload", formData, config);
-      setImages(data);
+      // setImages([...data]);
       setLoading(false);
+      return data;
     } catch (error) {
       setLoading(false);
+      setError("Error in uploading images");
     }
   };
 
@@ -181,6 +183,7 @@ function Addhome() {
     if (!address.address || !files || !price || !type || !details) return false;
     return true;
   };
+
   return (
     <Layout>
       {loading && <Loading />}
@@ -228,7 +231,9 @@ function Addhome() {
             multiple
             onChange={(e) => setFiles(e.target.files)}
           />
-          <Button onClick={handleSubmit}>Submit</Button>
+          <Button onClick={handleSubmit} to="#">
+            Submit
+          </Button>
         </FormContainer>
       </Container>
     </Layout>
