@@ -126,13 +126,18 @@ const inputCss = css`
   margin-bottom: 1.5rem;
   padding: 0.3rem 0.7rem;
   line-height: 1.5rem;
-  border: 1px solid #ced4da;
   border-radius: 0.25rem;
   transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
   cursor: text;
   outline: none;
   background: ${({ theme }) => theme.background};
   color: ${({ theme }) => theme.primaryText};
+  border: 1px solid
+    ${({ theme }) => (theme.name === "dark" ? "#ced4da" : "#000")};
+  &::placeholder {
+    color: ${({ theme }) => (theme.name === "dark" ? "#ced4da" : "#000")};
+    font-weight: bold;
+  }
   &:focus {
     background: ${({ theme }) => theme.background};
     box-shadow: 0 0 5px ${({ theme }) => theme.primaryText};
@@ -231,7 +236,7 @@ function HomeDetails({ home, back }) {
       <Body>
         <ImageSection>
           <BackwardArrow onClick={nextImg} />
-          <img src={home.images[selectedImg]} alt={home.address} />
+          <img src={`/${home.images[selectedImg]}`} alt={home.address} />
           <ForwardArrow onClick={prevImg} />
         </ImageSection>
         <ContactSection>

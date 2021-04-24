@@ -106,7 +106,7 @@ function ListCard({
         <BackwardArrow onClick={backward} />
         <ImagesWrapperInner>
           <img
-            src={images[selectedImg]}
+            src={"/" + images[selectedImg]}
             alt="card"
             onClick={() => history.push(`/homes/${_id}`)}
           />

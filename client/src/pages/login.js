@@ -71,6 +71,10 @@ const Alert = styled.div`
   color: red;
   margin-top: 1rem;
 `;
+const Message = styled.div`
+  color: green;
+  margin-top: 1rem;
+`;
 
 function Login({ history, location }) {
   const state = useContext(StateContext);
@@ -80,6 +84,7 @@ function Login({ history, location }) {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const handleSubmit = async () => {
     dispatch({ type: USER_LOGIN_REQUEST });
@@ -93,6 +98,10 @@ function Login({ history, location }) {
       localStorage.setItem("userToken", data.token);
     } catch (e) {
       dispatch({ type: USER_LOGIN_FAIL, payload: e });
+      setError(
+        e.response?.data?.message ||
+          "Something went wrong please check email/password and try again"
+      );
     }
   };
 
@@ -111,8 +120,9 @@ function Login({ history, location }) {
           <Form>
             <h2>Login</h2>
             {location.state?.message && (
-              <Alert>{location.state?.message}</Alert>
+              <Message>{location.state?.message}</Message>
             )}
+            {error && <Alert>{error}</Alert>}
             <InputGroup>
               Email:
               <Input

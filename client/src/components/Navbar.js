@@ -6,6 +6,7 @@ import { Button } from "./Button";
 import { FaBars } from "react-icons/fa";
 import { DispatchContext, StateContext } from "../context/GlobalContext";
 import { USER_LOGOUT } from "../context/constants/userConstants";
+import { FaSun, FaMoon } from "react-icons/fa";
 
 const Nav = styled.nav`
   height: 60px;
@@ -107,6 +108,21 @@ const MenuItem = styled.div`
   }
 `;
 
+// Dark theme button
+const DarkThemeBtn = styled.div`
+  margin: 0 1rem;
+  font-size: 1.4rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  .sun {
+    color: #fff;
+  }
+  .moon {
+    color: #000;
+  }
+`;
+
 function Navbar({ toggleDropdown, setTheme, theme, atHome }) {
   const { user } = useContext(StateContext);
   const dispatch = useContext(DispatchContext);
@@ -159,6 +175,15 @@ function Navbar({ toggleDropdown, setTheme, theme, atHome }) {
         ))}
       </NavMenu>
       <NavBtn>
+        <DarkThemeBtn
+          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+        >
+          {theme === "light" ? (
+            <FaMoon className="moon" />
+          ) : (
+            <FaSun className="sun" />
+          )}
+        </DarkThemeBtn>
         <Button primary="true" to="/addhome">
           Add new Property
         </Button>
@@ -180,9 +205,9 @@ function Navbar({ toggleDropdown, setTheme, theme, atHome }) {
                 <MenuItem onClick={() => history.push("/user")}>
                   Profile
                 </MenuItem>
-                <MenuItem onClick={() => history.push("/user")}>
+                {/* <MenuItem onClick={() => history.push("/user")}>
                   Preferences
-                </MenuItem>
+                </MenuItem> */}
                 <MenuItem onClick={logout}>Logout</MenuItem>
               </ProfileMenu>
             )}
@@ -198,20 +223,6 @@ function Navbar({ toggleDropdown, setTheme, theme, atHome }) {
             Login
           </Button>
         )}
-
-        {/* <DarkThemeBtn>
-          <FaSun className="sun" />
-          <ToggleSwitch htmlFor="darkmodetoggler">
-            <input
-              type="checkbox"
-              checked={theme === "dark"}
-              onChange={() => setTheme(theme === "dark" ? "light" : "dark")}
-              id="darkmodetoggler"
-            />
-            <Slider className="slider"></Slider>
-          </ToggleSwitch>
-          <FaMoon className="moon" />
-        </DarkThemeBtn> */}
       </NavBtn>
     </Nav>
   );
