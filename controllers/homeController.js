@@ -9,6 +9,14 @@ const getAllHomes = asyncHandler(async (req, res) => {
   res.json(homes);
 });
 
+//@desc   get all homes list by user
+//@route  GET /api/homes
+//@access Private
+const getUserHomes = asyncHandler(async (req, res) => {
+  const homes = await Home.find({posted_by:req.user._id});
+  res.json(homes);
+});
+
 //@desc   Create new home
 //@route  POST /api/homes
 //@access Private
@@ -136,4 +144,4 @@ const deleteHome = asyncHandler(async (req, res) => {
   }
 });
 
-export { getAllHomes, addNewHome, updateHome, deleteHome };
+export { getAllHomes,getUserHomes, addNewHome, updateHome, deleteHome };
