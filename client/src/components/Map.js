@@ -1,21 +1,34 @@
 import { useState, useEffect, useContext } from "react";
-import ReactDOM from "react-dom";
 import { useHistory } from "react-router-dom";
-import { Map, InfoWindow, GoogleApiWrapper } from "google-maps-react";
-import MarkerClusterer from "@googlemaps/markerclustererplus";
 import { DispatchContext, StateContext } from "../context/GlobalContext";
 import { useTheme } from "styled-components";
 import { mapStyles } from "../globalStyles";
 import MapInfoWindow from "./MapInfoWindow";
+import GoogleMapReact from "google-map-react";
+import styled from "styled-components";
+import { ImLocation } from "react-icons/im";
 
-const MapContainer = ({ google }) => {
+
+const MapMarker = styled.div`
+  position: absolute;
+  transform: translate(-50%, -50%);
+  color: #3f51b5;
+
+  svg {
+    width: 1.5rem;
+    height: 1.5rem;
+    cursor: pointer;
+    text-align: center;
+  }
+`;
+
+const MapContainer = () => {
   const theme = useTheme();
   const history = useHistory();
   const dispatch = useContext(DispatchContext);
   const state = useContext(StateContext);
   const { homes } = state.homesList;
   const [showInfoWindow, setShowInfoWindow] = useState(false);
-  const [activeMarker, setActiveMarker] = useState({});
   const [selectedPlace, setSelectedPlace] = useState({});
   const [mapStyle, setMapStyle] = useState(mapStyles.dark);
 
@@ -23,76 +36,58 @@ const MapContainer = ({ google }) => {
     lng: -122.85,
     lat: 49.183333,
   };
-  useEffect(() => {
+
+   useEffect(() => {
     setMapStyle(theme.name === "dark" ? mapStyles.dark : mapStyles.light);
-  }, [theme]);
+  }, [theme]); 
 
-  const setMarkers = (props, map) => {
-    let locations = homes;
-    let markers =
-      locations &&
-      locations.map((location) => {
-        let marker = new google.maps.Marker({
-          position: location.position,
-          title: location.title,
-        });
-        marker.addListener("click", () => {
-          setSelectedPlace(location);
-          setActiveMarker(marker);
-          setShowInfoWindow(true);
-          dispatch({ type: "SET_SELECTEDITEM", payload: location });
-        });
-        return marker;
-      });
-    new MarkerClusterer(map, markers, {
-      imagePath:
-        "https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m",
-      gridSize: 10,
-      minimumClusterSize: 2,
-    });
+
+
+  const markerClicked = (home) => {
+    setSelectedPlace(home);
+    setShowInfoWindow(true);
+    dispatch({ type: "SET_SELECTEDITEM", payload: home });
   };
 
-  const openInfoWindow = () => {
-    ReactDOM.render(
-      <MapInfoWindow selectedPlace={selectedPlace} history={history} />,
-      document.getElementById("infowindow-content")
-    );
+  const closeInfoWindow = () => {
+    setSelectedPlace(null);
+    setShowInfoWindow(false);
+    dispatch({ type: "REMOVE_SELECTEDITEM" });
   };
+
+  const createMapOptions =()=>({
+    styles: mapStyle
+  })
+
   return (
-    <div key={mapStyle}>
-      <Map
-        google={google}
-        zoom={12}
-        styles={mapStyle}
-        initialCenter={{
-          ...location,
-        }}
-        onClick={() => {
-          if (showInfoWindow) {
-            setActiveMarker(null);
-            setShowInfoWindow(false);
-            dispatch({ type: "REMOVE_SELECTEDITEM" });
-          }
-        }}
-        onReady={(props, map) => setMarkers(props, map)}
+    <div key={mapStyle} style={{ width: "100%", height: "100%" }}>
+      <GoogleMapReact
+        bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAP_API }}
+        defaultCenter={location}
+        defaultZoom={12}
+        onClick={closeInfoWindow}
+        options={createMapOptions}
       >
-        <InfoWindow
-          marker={activeMarker}
-          visible={showInfoWindow}
-          onClose={() => {
-            setActiveMarker(null);
-            setShowInfoWindow(false);
-            dispatch({ type: "REMOVE_SELECTEDITEM" });
-          }}
-          onOpen={openInfoWindow}
-        >
-          <div id="infowindow-content" />
-        </InfoWindow>
-      </Map>
+        {homes.map((home) => (
+          <MapMarker
+            onClick={() => markerClicked(home)}
+            lat={home.position.lat}
+            lng={home.position.lng}
+            key={home._id}
+          >
+            {showInfoWindow && selectedPlace._id === home._id && (
+              <MapInfoWindow
+                selectedPlace={selectedPlace}
+                history={history}
+                closeInfoWindow={closeInfoWindow}
+              />
+            )}
+            <ImLocation />
+          </MapMarker>
+        ))}
+      </GoogleMapReact>
     </div>
   );
 };
 
-export default GoogleApiWrapper({
-  apiKey: process.env.REACT_APP_GOOGLE_MAP_API,
-})(MapContainer);
+export default MapContainer;

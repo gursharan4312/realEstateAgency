@@ -1,13 +1,29 @@
 import { useState } from "react";
 
-import { IoChevronForward, IoChevronBack } from "react-icons/io5";
-import styled, { css } from "styled-components";
+import {
+  IoChevronForward,
+  IoChevronBack,
+  IoCloseCircleSharp,
+} from "react-icons/io5";
+import styled, { css, useTheme } from "styled-components";
 import { BsDot } from "react-icons/bs";
 
 const InfoWindowContent = styled.div`
   display: flex;
   flex-direction: column;
-  color: #000;
+  color: ${props=>props.theme.primaryText};
+  position: absolute;
+  left: -80px;
+  bottom: 100%;
+  width: 250px;
+  background: ${props=>props.theme.backgroundVariant};
+  padding: 0.35rem;
+  padding-top: 1.5rem;
+  border-radius: 10px;
+  span {
+    display: flex;
+    align-items: center;
+  }
 `;
 
 const InfoWindowImgContainer = styled.div`
@@ -36,7 +52,7 @@ const arrowStyles = css`
   cursor: pointer;
   background: rgba(255, 255, 255, 0.3);
   border-radius: 50px;
-  padding: 10px;
+  padding: 2px;
   user-select: none;
   transition: 0.3s;
 
@@ -51,18 +67,26 @@ const ForwardArrow = styled(IoChevronForward)`
 const BackwardArrow = styled(IoChevronBack)`
   ${arrowStyles}
 `;
+const CloseBtn = styled(IoCloseCircleSharp)`
+  ${arrowStyles}
+  position: absolute;
+  right: 0;
+  top: 0;
+`;
 
-function MapInfoWindow({ selectedPlace, history }) {
+function MapInfoWindow({ selectedPlace, history, closeInfoWindow }) {
+  const theme = useTheme();
   const [selectedImg, setSelectedImg] = useState(0);
   const forward = () =>
     setSelectedImg((selectedImg + 1) % selectedPlace.images.length);
   const backward = () => {
     setSelectedImg(
-      selectedImg === 0 ? selectedPlace.images.length - 1 : selectedImg - 1
+      selectedImg === 0 ? selectedPlace.images.length - 1 : selectedImg - 1,
     );
   };
   return (
     <InfoWindowContent>
+      <CloseBtn onClick={closeInfoWindow} />
       <InfoWindowImgContainer>
         <BackwardArrow onClick={backward} />
         <img
@@ -76,7 +100,7 @@ function MapInfoWindow({ selectedPlace, history }) {
       <h3>{selectedPlace.title}</h3>
       <span>${selectedPlace.price}</span>
       <span>
-        {selectedPlace.type} <BsDot /> {selectedPlace.date}
+        {selectedPlace.type} <BsDot /> {selectedPlace.date.substr(0,10)}
       </span>
       <span>
         {selectedPlace.rooms} BED <BsDot /> {selectedPlace.washrooms} BATH{" "}
