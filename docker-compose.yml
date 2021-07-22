@@ -13,6 +13,8 @@ services:
       REACT_APP_GOOGLE_MAP_API: ${REACT_APP_GOOGLE_MAP_API}
       NODE_ENV: ${NODE_ENV}
     container_name: realestate
+    volumes:
+      - ~/realEstateAgency:/app
 networks:
   default:
     external:
