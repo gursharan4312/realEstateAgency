@@ -1,5 +1,6 @@
 import Home from "../models/homeModal.js";
 import asyncHandler from "express-async-handler";
+import fs from 'fs'
 
 //@desc   get all homes list
 //@route  GET /api/homes
@@ -126,13 +127,17 @@ const updateHome = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc    DELETE a home
+// @desc    DELETE a home and images linked to home
 // @route   DELETE /api/homes/:id
 // @access  Private/Admin
 const deleteHome = asyncHandler(async (req, res) => {
   const home = await Home.findById(req.params.id);
   if (home) {
     if (home.posted_by.equals(req.user._id)) {
+      //removing images of the home
+      home.images.map(image=>{
+        fs.unlinkSync(image)
+      })
       await home.remove();
       res.json({ message: "Home removed" });
     } else {

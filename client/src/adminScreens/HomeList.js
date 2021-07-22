@@ -120,7 +120,7 @@ const DeleteIcon = styled(AiFillDelete)`
   color: #ca0b00;
 `;
 
-function HomeList({ homesList, setSelectedHome }) {
+function HomeList({ homesList, setSelectedHome, deleteHome }) {
   return (
     <Container>
       <Homes>
@@ -151,7 +151,7 @@ function HomeList({ homesList, setSelectedHome }) {
               <td data-label="actions">
                 <Icons>
                   <EditIcon title="edit" />
-                  <DeleteIcon title="delete" />
+                  <DeleteIcon title="delete" onClick={()=>deleteHome(home)} />
                 </Icons>
               </td>
             </Home>

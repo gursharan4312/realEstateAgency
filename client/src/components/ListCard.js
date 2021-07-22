@@ -84,6 +84,7 @@ function ListCard({
   _id,
   images,
   title,
+  address,
   price,
   type,
   date,
@@ -116,8 +117,9 @@ function ListCard({
       <CardContent>
         <h2 onClick={() => history.push(`/homes/${_id}`)}>{title}</h2>
         <span>${price}</span>
+        <span>{address}</span>
         <span>
-          {type} <BsDot /> {date}
+          {type}  <small>{date.substr(0,10)}</small>
         </span>
         <span>
           {rooms} BED <BsDot /> {washrooms} BATH <BsDot /> {size}FT²

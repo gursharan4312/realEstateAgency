@@ -214,7 +214,7 @@ function HomeDetails({ home, back }) {
               <li>
                 <BsDot />
               </li>
-              <li className="time"> {home.date}</li>
+              <li className="time"> {home.date.substr(0,10)}</li>
             </ul>
             <span className="home-address">{home.address}</span>
           </div>
