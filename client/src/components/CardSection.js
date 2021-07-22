@@ -47,12 +47,12 @@ function CardSection({ itemOne, itemTwo, header }) {
       <Container>
         <ColumnLeft>
           <Fade top>
-            <Card {...itemOne} />
+            <Card image={itemOne.images[0]} alt={itemOne.title} buttonLabel="View details" buttonLink={`/homes/${itemOne._id}`} />
           </Fade>
         </ColumnLeft>
         <ColumnRight>
           <Fade bottom>
-            <Card {...itemTwo} />
+            <Card image={itemTwo.images[0]} alt={itemTwo.title} buttonLabel="View details" buttonLink={`/homes/${itemTwo._id}`} />
           </Fade>
         </ColumnRight>
       </Container>

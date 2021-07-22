@@ -3,8 +3,8 @@ import Layout from "../components/Layout";
 import InfoSection from "../components/InfoSection";
 import { SliderData } from "../data/SliderData";
 import { InfoData, InfoDataTwo } from "../data/InfoData";
-import { CardData } from "../data/CardData";
 import CardSection from "../components/CardSection";
+import {homes} from '../data/homesData'
 
 function index() {
   return (
@@ -12,7 +12,7 @@ function index() {
       <Hero slides={SliderData} />
       <InfoSection {...InfoData} />
       <InfoSection {...InfoDataTwo} />
-      <CardSection {...CardData} header="Featured" />
+      <CardSection itemOne={homes[0]} itemTwo={homes[1]} header="Featured" />
     </Layout>
   );
 }
