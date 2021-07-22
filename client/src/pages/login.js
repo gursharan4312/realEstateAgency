@@ -104,6 +104,24 @@ function Login({ history, location }) {
       );
     }
   };
+  const demoLogin = async () => {
+    dispatch({ type: USER_LOGIN_REQUEST });
+    try {
+      const { data } = await axios.post("/api/users/login", {
+        email:"admin@example.com",
+        password:"1234",
+      });
+      dispatch({ type: USER_LOGIN_SUCCESS, payload: { ...data, auth: true } });
+      //adding token to localstorage
+      localStorage.setItem("userToken", data.token);
+    } catch (e) {
+      dispatch({ type: USER_LOGIN_FAIL, payload: e });
+      setError(
+        e.response?.data?.message ||
+          "Something went wrong please check email/password and try again"
+      );
+    }
+  };
 
   useEffect(() => {
     if (user && user.auth) {
@@ -142,6 +160,7 @@ function Login({ history, location }) {
             <ButtonContainer>
               <Button onClick={handleSubmit}>Login</Button>
               <Button onClick={history.goBack}>Cancel</Button>
+              <Button onClick={demoLogin}>Demo Login</Button>
             </ButtonContainer>
             <div style={{ textAlign: "center", paddingTop: "1rem" }}>
               <span>
