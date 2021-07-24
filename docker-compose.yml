@@ -5,6 +5,8 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
+      args:
+         REACT_APP_GOOGLE_MAP_API: ${REACT_APP_GOOGLE_MAP_API}
     ports:
       - 5001:5001
     environment:
