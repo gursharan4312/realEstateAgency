@@ -5,7 +5,6 @@ RUN npm install
 COPY client/package*.json ./client/
 RUN npm install --prefix client
 COPY . .
-COPY ./client/.env ./client/
 RUN npm run build --prefix client
 EXPOSE 5001
 CMD [ "npm","start" ]
